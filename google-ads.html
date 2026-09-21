@@ -154,7 +154,7 @@
     .crosssell-label { font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 3px; }
     .crosssell-title { font-size: 16px; font-weight: 800; color: var(--navy); }
     .crosssell-intro { font-size: 13px; color: var(--text-soft); line-height: 1.6; margin-bottom: 20px; font-style: italic; }
-    .crosssell-cards { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    .crosssell-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
     .crosssell-card { background: var(--white); border: 1px solid var(--border); border-radius: 12px; padding: 20px 24px; display: flex; flex-direction: column; gap: 6px; text-decoration: none; transition: box-shadow 0.15s, border-color 0.15s; }
     .crosssell-card:hover { box-shadow: 0 4px 14px rgba(0,0,0,0.07); border-color: rgba(99,102,241,0.3); }
     .crosssell-card-badge { font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 2px; }
@@ -230,9 +230,10 @@
       <img src="https://www.wisevu.com/wp-content/uploads/2020/10/wisevu-web-design-and-seo-light.svg" alt="Wisevu" />
     </a>
     <div class="program-nav">
-      <a href="meta-ads.html">Meta Ads</a>
-      <a href="organic-social.html">Organic Social</a>
       <a href="google-ads.html" class="active">Google Ads</a>
+      <a href="bing-ads.html">Bing Ads</a>
+      <a href="youtube-ads.html">YouTube Ads</a>
+      <a href="remarketing.html">Remarketing</a>
     </div>
   </div>
 </nav>
@@ -536,42 +537,6 @@
 
     <div class="addon-card">
       <div class="card-top">
-        <div class="addon-type">Monthly Add-On + Setup</div>
-        <button class="info-btn" onclick="openAddonModal('addon2')" aria-label="More info">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
-        </button>
-      </div>
-      <div class="addon-name">Bing Ads Management</div>
-      <div class="addon-price">$200 <span style="font-size:14px;font-weight:600;">CAD/month</span></div>
-      <div class="addon-note">+$400 CAD one-time setup. Expand your search presence to Microsoft's Bing, Yahoo &amp; DuckDuckGo networks.</div>
-    </div>
-
-    <div class="addon-card">
-      <div class="card-top">
-        <div class="addon-type">Monthly Add-On + Setup</div>
-        <button class="info-btn" onclick="openAddonModal('addon3')" aria-label="More info">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
-        </button>
-      </div>
-      <div class="addon-name">YouTube Ads Campaign</div>
-      <div class="addon-price">$399 <span style="font-size:14px;font-weight:600;">CAD/month</span></div>
-      <div class="addon-note">Requires a minimum $300 CAD/month ad spend paid directly to Google. Video creative sourced separately.</div>
-    </div>
-
-    <div class="addon-card">
-      <div class="card-top">
-        <div class="addon-type">One-Time Setup</div>
-        <button class="info-btn" onclick="openAddonModal('addon4')" aria-label="More info">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
-        </button>
-      </div>
-      <div class="addon-name">Remarketing Campaign</div>
-      <div class="addon-price">$300 <span style="font-size:14px;font-weight:600;">CAD setup</span></div>
-      <div class="addon-note">Management included at no extra cost. Re-engage website visitors who didn't book on their first visit.</div>
-    </div>
-
-    <div class="addon-card">
-      <div class="card-top">
         <div class="addon-type">Monthly + Setup</div>
         <button class="info-btn" onclick="openAddonModal('addon5')" aria-label="More info">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
@@ -608,53 +573,6 @@
         <p>Your base Google Ads program includes up to 3 search campaigns. Each additional campaign allows you to promote another treatment, service line, or target a new geographic area.</p>
         <p>Each added campaign receives full keyword research, ad copy development, extension setup, and the same ongoing optimization applied to your core campaigns. Additional campaigns share the same reporting dashboard and dedicated account manager.</p>
         <p>This is the most efficient way to expand coverage without starting a new program from scratch.</p>
-      </div>
-    </div>
-  </div>
-
-  <div class="modal-overlay" id="addonModal2" onclick="if(event.target===this)closeAddonModal('addon2')">
-    <div class="modal-card">
-      <button class="modal-close" onclick="closeAddonModal('addon2')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
-      <div class="modal-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>
-      <div class="modal-title">Bing Ads Management</div>
-      <div class="modal-qty">$200 CAD/month + $400 CAD one-time setup</div>
-      <div class="modal-divider"></div>
-      <div class="modal-desc">
-        <p>Bing (Microsoft Advertising) reaches the audiences that Google doesn't. While Google dominates search volume, Bing tends to attract an older, higher-income demographic — often a strong fit for elective or premium medical services.</p>
-        <p>Bing Ads also typically delivers lower cost-per-click and less competition than Google in most medical verticals, making it an efficient way to extend your search reach. The Microsoft Advertising network includes Bing, Yahoo, DuckDuckGo, and partner sites.</p>
-        <p>We import and adapt your Google campaigns for Bing, then manage them separately with ongoing optimization, search term mining, and monthly reporting. Bing ad spend is paid directly to Microsoft and is not included in the management fee.</p>
-        <p>The one-time $400 CAD setup fee covers account creation, campaign import and adaptation, conversion tracking setup, and initial optimization.</p>
-      </div>
-    </div>
-  </div>
-
-  <div class="modal-overlay" id="addonModal3" onclick="if(event.target===this)closeAddonModal('addon3')">
-    <div class="modal-card">
-      <button class="modal-close" onclick="closeAddonModal('addon3')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
-      <div class="modal-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg></div>
-      <div class="modal-title">YouTube Ads Campaign</div>
-      <div class="modal-qty">$399 CAD/month management + $300 CAD/month minimum ad spend</div>
-      <div class="modal-divider"></div>
-      <div class="modal-desc">
-        <p>YouTube is the world's second-largest search engine, and Google Ads gives you direct access to it. YouTube Ads allow you to reach prospective patients with video content before, during, or alongside relevant videos — building awareness and trust in a way that search ads alone cannot.</p>
-        <p>This add-on is ideal for practices offering treatments that benefit from education and visual demonstration — cosmetic procedures, dental services, physiotherapy, and similar services where seeing is believing.</p>
-        <p>We handle campaign setup, targeting strategy (interest, keyword, demographic, remarketing audiences), ad scheduling, bidding, and ongoing optimization. YouTube ad spend is $300 CAD/month minimum, paid directly to Google and separate from the management fee.</p>
-        <p><em>Video creative is not included and must be sourced separately. Our Short-Form Video Ad Creative add-on is available if professional video production is needed.</em></p>
-      </div>
-    </div>
-  </div>
-
-  <div class="modal-overlay" id="addonModal4" onclick="if(event.target===this)closeAddonModal('addon4')">
-    <div class="modal-card">
-      <button class="modal-close" onclick="closeAddonModal('addon4')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
-      <div class="modal-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
-      <div class="modal-title">Remarketing Campaign</div>
-      <div class="modal-qty">$300 CAD one-time setup — management included</div>
-      <div class="modal-divider"></div>
-      <div class="modal-desc">
-        <p>Most people who visit your website don't book on their first visit. Remarketing keeps your practice visible to those visitors as they continue browsing across the Google Display Network — bringing them back when they're ready to take action.</p>
-        <p>We set up and manage your remarketing audiences, banner ad creative, bidding strategy, and frequency capping to keep your ads relevant without becoming intrusive. Remarketing campaigns typically deliver a significantly lower cost-per-click than search campaigns while reaching a warmer, higher-intent audience.</p>
-        <p><strong>The $300 CAD covers full remarketing setup. Ongoing management is included at no additional cost — it's built into your base program.</strong> Remarketing ad spend is paid directly to Google and is separate from the management fee.</p>
       </div>
     </div>
   </div>
@@ -747,8 +665,8 @@
   </div>
 
   <!-- Cross-sell to Meta Ads + Organic Social -->
-  <p class="section-label">Complete Your Digital Marketing</p>
-  <h2 class="section-title">Pair with Other Programs</h2>
+  <p class="section-label">Part of the Google Suite</p>
+  <h2 class="section-title">Explore Google Program Add-Ons</h2>
   <div class="crosssell-wrap">
     <div class="crosssell-header">
       <div class="crosssell-icon">
@@ -758,22 +676,28 @@
       </div>
       <div>
         <div class="crosssell-label">Exclusive Google Ads Client Pricing</div>
-        <div class="crosssell-title">Expand Your Patient Acquisition</div>
+        <div class="crosssell-title">Go Further with Companion Programs</div>
       </div>
     </div>
-    <p class="crosssell-intro">Google Ads captures patients actively searching. Pair it with Meta Ads to reach patients before they search, and Organic Social to build the trust that turns clicks into bookings.</p>
+    <p class="crosssell-intro">Google search ads capture high-intent patients. Extend your reach with Bing Ads across Microsoft's network, video advertising on YouTube, and Remarketing to re-engage visitors who didn't book on their first visit.</p>
     <div class="crosssell-cards">
-      <a href="meta-ads.html" class="crosssell-card">
-        <div class="crosssell-card-badge">Meta Ads Program</div>
-        <div class="crosssell-card-name">Facebook &amp; Instagram Ads</div>
-        <div class="crosssell-card-desc">Reach prospective patients before they search — with precision targeting on Facebook and Instagram. Brand-building awareness campaigns that keep your practice top of mind and drive demand at the top of the funnel.</div>
-        <div class="crosssell-card-price">$799 <span>CAD/month</span></div>
+      <a href="bing-ads.html" class="crosssell-card">
+        <div class="crosssell-card-badge">Bing Ads Program</div>
+        <div class="crosssell-card-name">Microsoft Bing Ads</div>
+        <div class="crosssell-card-desc">Reach the 30% of searchers Google misses — on Bing, Yahoo, and DuckDuckGo. Lower CPC and less competition in most medical verticals with a higher-income, older demographic.</div>
+        <div class="crosssell-card-price">$200 <span>CAD/month</span></div>
       </a>
-      <a href="organic-social.html" class="crosssell-card">
-        <div class="crosssell-card-badge">Organic Social Program</div>
-        <div class="crosssell-card-name">Social Media Management</div>
-        <div class="crosssell-card-desc">Build the credibility and trust that converts ad clicks into booked appointments. Professionally crafted posts by medical marketing specialists, designed around patient psychology and your specialty.</div>
-        <div class="crosssell-card-price">$499 <span>CAD/month</span></div>
+      <a href="youtube-ads.html" class="crosssell-card">
+        <div class="crosssell-card-badge">YouTube Ads Program</div>
+        <div class="crosssell-card-name">YouTube Video Advertising</div>
+        <div class="crosssell-card-desc">Reach prospective patients with video before, during, or alongside relevant YouTube content. Ideal for treatments that benefit from education and visual demonstration.</div>
+        <div class="crosssell-card-price">$399 <span>CAD/month</span></div>
+      </a>
+      <a href="remarketing.html" class="crosssell-card">
+        <div class="crosssell-card-badge">Remarketing Program</div>
+        <div class="crosssell-card-name">Display Remarketing</div>
+        <div class="crosssell-card-desc">Re-engage website visitors who didn't book on their first visit. Stay visible across the Google Display Network with lower CPC and higher conversion rates than cold search traffic.</div>
+        <div class="crosssell-card-price">$300 <span>CAD setup</span></div>
       </a>
     </div>
   </div>
@@ -864,7 +788,7 @@ function handleOverlayClick(e) {
   if (e.target === document.getElementById('modal-overlay')) closeModal();
 }
 
-var addonModalIds = ['addon1','addon2','addon3','addon4','addon5','addon6'];
+var addonModalIds = ['addon1','addon5','addon6'];
 document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') {
     closeModal();

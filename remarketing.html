@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Display Remarketing — Medical Practice Marketing | Wisevu</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --accent: #6366f1; --accent-dark: #4f46e5; --accent-light: #eef2ff;
+      --accent-mid: #a5b4fc; --navy: #0f1e2d; --navy-mid: #1a2e42;
+      --gray-bg: #f1f5f9; --gray-line: #dde5ef; --text: #1a2535;
+      --text-soft: #4a5f78; --text-muted: #7a94b0; --white: #ffffff;
+      --gradient: linear-gradient(135deg, #6366f1, #a5b4fc); --border: #e5e7eb;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; background: var(--gray-bg); color: var(--text); min-height: 100vh; -webkit-font-smoothing: antialiased; }
+
+    /* Topbar */
+    .topbar { background: var(--navy); position: sticky; top: 0; z-index: 200; box-shadow: 0 1px 0 rgba(255,255,255,0.06); }
+    .topbar-inner { max-width: 1100px; margin: 0 auto; padding: 0 32px; display: flex; align-items: center; justify-content: space-between; height: 60px; }
+    .topbar-logo img { height: 28px; display: block; }
+    .program-nav { display: flex; gap: 4px; align-items: center; }
+    .program-nav a { text-decoration: none; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 7px 16px; border-radius: 6px; color: rgba(255,255,255,0.45); transition: all 0.18s; border: 1px solid transparent; }
+    .program-nav a:hover { color: rgba(255,255,255,0.85); background: rgba(255,255,255,0.07); }
+    .program-nav a.active { color: #fff; background: var(--accent); border-color: var(--accent-dark); }
+
+    /* Hero */
+    .hero { background: linear-gradient(160deg, #0a1628 0%, #0d2347 45%, #1a3d6e 100%); color: #fff; padding: 80px 32px 72px; text-align: center; position: relative; overflow: hidden; }
+    .hero::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--accent), transparent); }
+    #neural-canvas { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+    .hero-inner { position: relative; z-index: 2; display: flex; flex-direction: column; align-items: center; }
+    .tier-label { font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-bottom: 12px; }
+    .hero h1 { font-size: clamp(45px, 8vw, 81px); font-weight: 900; letter-spacing: -0.03em; line-height: 0.92; margin-bottom: 18px; color: #fff; }
+    .hero h1 .program-name { background: linear-gradient(135deg, #6366f1, #a5b4fc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .intensity-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.11); border-radius: 100px; padding: 5px 14px 5px 10px; margin-bottom: 28px; font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.38); letter-spacing: 0.08em; text-transform: uppercase; }
+    .intensity-dot { width: 8px; height: 8px; border-radius: 50%; background: #6ee7b7; flex-shrink: 0; box-shadow: 0 0 6px rgba(110,231,183,0.5); }
+    .hero-desc { max-width: 580px; margin: 0 auto 44px; font-size: 15px; line-height: 1.8; color: rgba(255,255,255,0.62); font-weight: 400; }
+    .hero-brand-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(5,10,38,0.75); border: 1.5px solid rgba(99,102,241,0.7); box-shadow: 0 0 12px rgba(99,102,241,0.2), inset 0 0 8px rgba(99,102,241,0.06); color: rgba(255,255,255,0.92); font-size: 13px; font-weight: 800; letter-spacing: 0.18em; text-transform: uppercase; padding: 9px 24px; border-radius: 100px; margin-bottom: 16px; }
+    .hero-brand-dot { width: 6px; height: 6px; background: rgba(255,255,255,0.9); border-radius: 50%; flex-shrink: 0; }
+    .hero-heading-wrap { position: relative; max-width: 800px; width: 100%; display: flex; flex-direction: column; align-items: center; overflow: visible; }
+    .hf-col { position: absolute; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 14px; z-index: 3; pointer-events: none; opacity: 0.55; }
+    .hf-left { left: -190px; align-items: flex-start; }
+    .hf-right { right: -190px; align-items: flex-end; }
+    .hfc { background: rgba(6,12,40,0.88); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); border: 1px solid rgba(255,255,255,0.1); border-radius: 18px; }
+    .hfc-logo { width: 96px; height: 96px; display: flex; align-items: center; justify-content: center; }
+    .hfc-rm1  { transform: rotate(-9deg); box-shadow: 0 8px 32px rgba(0,0,0,0.4); }
+    .hfc-rm2  { transform: rotate(9deg);  box-shadow: 0 8px 32px rgba(0,0,0,0.4); }
+    .hfc-results { padding: 14px 44px 14px 16px; position: relative; min-width: 158px; transform: rotate(-5deg); box-shadow: 0 6px 24px rgba(0,0,0,0.35); }
+    .hfc-results-text { font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.85); line-height: 1.9; }
+    .hfc-results-arrow { position: absolute; top: 12px; right: 12px; color: #6ee7b7; font-size: 15px; font-weight: 900; }
+    .hfc-chart { padding: 16px 18px 14px; min-width: 170px; transform: rotate(5deg); box-shadow: 0 6px 24px rgba(0,0,0,0.35); }
+    .hfc-chart-label { font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.82); line-height: 1.5; margin-bottom: 14px; display: flex; justify-content: space-between; align-items: flex-start; }
+    .hfc-chart-arrow { color: #6ee7b7; font-size: 14px; font-weight: 900; }
+    .hfc-bars { display: flex; align-items: flex-end; gap: 6px; height: 52px; }
+    .hfc-bar { border-radius: 4px 4px 0 0; }
+    @media (max-width: 1200px) { .hf-col { display: none; } }
+    .price-block { width: 100%; max-width: 820px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.11); border-radius: 20px; padding: 28px 36px 32px; backdrop-filter: blur(12px); }
+    .price-block-top { display: flex; flex-direction: column; align-items: center; margin-bottom: 24px; }
+    .price-invest-label { font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-bottom: 8px; }
+    .price-amount { font-size: 72px; font-weight: 900; letter-spacing: -0.03em; line-height: 1; color: #fff; }
+    .price-currency { font-size: 32px; font-weight: 600; vertical-align: top; line-height: 1.4; color: rgba(255,255,255,0.55); }
+    .price-period { font-size: 13px; color: rgba(255,255,255,0.35); margin-top: 8px; letter-spacing: 0.08em; }
+    .price-block-divider { height: 1px; background: rgba(255,255,255,0.1); margin-bottom: 24px; }
+    .price-details-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; }
+    .price-detail-item { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 10px; padding: 0 16px; border-right: 1px solid rgba(255,255,255,0.09); }
+    .price-detail-item:last-child { border-right: none; }
+    .price-detail-icon { width: 42px; height: 42px; border-radius: 12px; background: rgba(99,102,241,0.18); display: flex; align-items: center; justify-content: center; }
+    .price-detail-icon svg { width: 20px; height: 20px; color: #a5b4fc; }
+    .price-detail-title { font-size: 13px; font-weight: 700; color: #fff; line-height: 1.3; }
+    .price-detail-note { font-size: 11.5px; color: rgba(255,255,255,0.42); line-height: 1.5; }
+
+    /* Stats bar */
+    .stats-bar { background: var(--navy-mid); border-bottom: 1px solid rgba(255,255,255,0.06); }
+    .stats-bar-inner { max-width: 1100px; margin: 0 auto; padding: 0 32px; display: flex; align-items: stretch; }
+    .stat-item { flex: 1; padding: 16px 24px; display: flex; flex-direction: column; gap: 3px; border-right: 1px solid rgba(255,255,255,0.06); }
+    .stat-item:last-child { border-right: none; }
+    .stat-label { font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.3); }
+    .stat-value { font-size: 17px; font-weight: 800; color: #fff; letter-spacing: -0.01em; }
+    .stat-note { font-size: 11px; color: rgba(255,255,255,0.3); margin-top: 1px; }
+
+    /* Main */
+    main { max-width: 1100px; margin: 0 auto; padding: 56px 32px 96px; }
+    .section-label { font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 5px; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .section-title { font-size: 22px; font-weight: 700; color: var(--navy); margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1.5px solid var(--gray-line); }
+    .section-desc { font-size: 13px; line-height: 1.7; color: var(--text-soft); max-width: 780px; margin-top: -14px; margin-bottom: 32px; font-style: italic; }
+
+    /* Card grid */
+    .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 48px; }
+    .card { background: var(--white); border: 1px solid var(--border); border-radius: 16px; padding: 24px; display: flex; flex-direction: column; gap: 12px; transition: box-shadow 0.18s, border-color 0.18s; }
+    .card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.07); border-color: rgba(99,102,241,0.3); }
+    .card-top { display: flex; align-items: flex-start; justify-content: space-between; }
+    .card-icon { width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, rgba(99,102,241,0.12), rgba(165,180,252,0.12)); flex-shrink: 0; }
+    .card-icon svg { width: 22px; height: 22px; color: #6366f1; }
+    .info-btn { background: none; border: 1px solid var(--gray-line); border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--text-muted); transition: all 0.15s; flex-shrink: 0; }
+    .info-btn:hover { background: var(--accent-light); border-color: var(--accent); color: var(--accent); }
+    .info-btn svg { width: 14px; height: 14px; }
+    .card-title { font-size: 15px; font-weight: 700; color: var(--navy); line-height: 1.35; }
+    .card-qty { display: inline-block; font-size: 12px; font-weight: 700; letter-spacing: 0.03em; padding: 3px 10px; border-radius: 8px; background-image: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; box-shadow: inset 0 0 0 200px rgba(99,102,241,0.09); width: fit-content; }
+
+    /* Modal */
+    .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(10,22,40,0.72); backdrop-filter: blur(4px); z-index: 500; align-items: center; justify-content: center; padding: 24px; }
+    .modal-overlay.open { display: flex; }
+    .modal-card { background: var(--white); border-radius: 20px; padding: 36px; max-width: 540px; width: 100%; position: relative; box-shadow: 0 24px 64px rgba(0,0,0,0.28); animation: modalIn 0.2s ease; }
+    @keyframes modalIn { from { opacity: 0; transform: translateY(8px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
+    .modal-close { position: absolute; top: 16px; right: 16px; background: var(--gray-bg); border: none; border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--text-muted); transition: all 0.15s; }
+    .modal-close:hover { background: var(--gray-line); color: var(--text); }
+    .modal-close svg { width: 16px; height: 16px; }
+    .modal-icon { width: 48px; height: 48px; border-radius: 14px; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, rgba(99,102,241,0.12), rgba(165,180,252,0.12)); margin-bottom: 14px; }
+    .modal-icon svg { width: 24px; height: 24px; color: #6366f1; }
+    .modal-title { font-size: 17px; font-weight: 800; color: var(--navy); margin-bottom: 6px; line-height: 1.3; padding-right: 32px; }
+    .modal-qty { display: inline-block; font-size: 12px; font-weight: 700; padding: 3px 10px; border-radius: 8px; background-image: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; box-shadow: inset 0 0 0 200px rgba(99,102,241,0.09); margin-bottom: 20px; width: fit-content; }
+    .modal-divider { height: 1px; background: var(--gray-line); margin-bottom: 20px; }
+    .modal-desc { font-size: 13.5px; line-height: 1.8; color: var(--text-soft); }
+    .modal-desc p { margin-bottom: 12px; }
+    .modal-desc p:last-child { margin-bottom: 0; }
+    .modal-desc strong { color: var(--text); font-weight: 600; }
+    .modal-desc em { font-style: italic; color: var(--text-muted); }
+    .modal-desc ul { margin: 6px 0 14px 18px; display: flex; flex-direction: column; gap: 4px; }
+
+    /* Add-ons */
+    .addons-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-bottom: 48px; }
+    .addon-card { background: var(--white); border: 1px solid var(--border); border-radius: 16px; padding: 24px 24px 20px; display: flex; flex-direction: column; gap: 8px; }
+    .addon-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.07); border-color: rgba(99,102,241,0.3); }
+    .addon-type { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); }
+    .addon-name { font-size: 15px; font-weight: 700; color: var(--navy); line-height: 1.35; }
+    .addon-price { font-size: 22px; font-weight: 900; letter-spacing: -0.02em; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .addon-note { font-size: 12px; color: var(--text-muted); line-height: 1.5; margin-top: 2px; }
+
+    /* Why Wisevu */
+    .why-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 48px; }
+    .why-card { background: var(--white); border: 1px solid var(--border); border-radius: 16px; padding: 24px; display: flex; flex-direction: column; gap: 10px; }
+    .why-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.07); border-color: rgba(99,102,241,0.3); }
+    .why-card-icon { width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, rgba(99,102,241,0.12), rgba(165,180,252,0.12)); flex-shrink: 0; }
+    .why-card-icon svg { width: 22px; height: 22px; color: #6366f1; }
+    .why-card-title { font-size: 14px; font-weight: 800; color: var(--navy); line-height: 1.35; }
+    .why-card-desc { font-size: 13px; line-height: 1.7; color: var(--text-soft); }
+
+    /* Cross-sell */
+    .crosssell-wrap { background: transparent; border: none; border-radius: 0; padding: 0; margin-bottom: 48px; }
+    .crosssell-header { display: flex; align-items: center; gap: 14px; margin-bottom: 20px; }
+    .crosssell-icon { width: 44px; height: 44px; border-radius: 12px; background: linear-gradient(135deg, rgba(99,102,241,0.15), rgba(165,180,252,0.15)); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .crosssell-icon svg { width: 22px; height: 22px; color: var(--accent); }
+    .crosssell-label { font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 3px; }
+    .crosssell-title { font-size: 16px; font-weight: 800; color: var(--navy); }
+    .crosssell-intro { font-size: 13px; color: var(--text-soft); line-height: 1.6; margin-bottom: 20px; font-style: italic; }
+    .crosssell-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .crosssell-card { background: var(--white); border: 1px solid var(--border); border-radius: 12px; padding: 20px 24px; display: flex; flex-direction: column; gap: 6px; text-decoration: none; transition: box-shadow 0.15s, border-color 0.15s; }
+    .crosssell-card:hover { box-shadow: 0 4px 14px rgba(0,0,0,0.07); border-color: rgba(99,102,241,0.3); }
+    .crosssell-card-badge { font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 2px; }
+    .crosssell-card-name { font-size: 15px; font-weight: 800; color: var(--navy); }
+    .crosssell-card-desc { font-size: 12.5px; color: var(--text-soft); line-height: 1.55; margin-top: 2px; flex: 1; }
+    .crosssell-card-price { font-size: 22px; font-weight: 900; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; letter-spacing: -0.02em; margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--gray-line); }
+    .crosssell-card-price span { font-size: 13px; font-weight: 500; color: var(--text-muted); background: none; -webkit-text-fill-color: var(--text-muted); }
+
+    /* Notes */
+    .notes { background: var(--white); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: 0 14px 14px 0; padding: 24px 28px; }
+    .notes-label { font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 16px; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .notes p { font-size: 14px; line-height: 1.75; color: var(--text-soft); margin-bottom: 12px; }
+    .notes p:last-child { margin-bottom: 0; }
+    .notes strong { color: var(--text); font-weight: 600; }
+
+    /* How It Works */
+    .hiw-section { margin-bottom: 56px; }
+    .hiw-intro { font-size: 13px; line-height: 1.7; color: var(--text-soft); max-width: 600px; margin-top: -14px; margin-bottom: 36px; font-style: italic; }
+    .hiw-track { position: relative; display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; }
+    .hiw-track::before { content: ''; position: absolute; top: 22px; left: calc(12.5% + 8px); right: calc(12.5% + 8px); height: 1px; background: linear-gradient(90deg, rgba(99,102,241,0.35), rgba(165,180,252,0.5), rgba(99,102,241,0.35)); z-index: 0; }
+    .hiw-step { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; text-align: center; padding: 0 16px 0; }
+    .hiw-num-wrap { width: 44px; height: 44px; border-radius: 50%; background: var(--white); border: 1.5px solid rgba(99,102,241,0.25); display: flex; align-items: center; justify-content: center; margin-bottom: 20px; flex-shrink: 0; box-shadow: 0 2px 8px rgba(99,102,241,0.12); }
+    .hiw-num { font-size: 13px; font-weight: 900; letter-spacing: -0.02em; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .hiw-step-title { font-size: 14px; font-weight: 800; color: var(--navy); margin-bottom: 5px; line-height: 1.3; }
+    .hiw-step-sub { font-size: 11px; font-weight: 600; letter-spacing: 0.04em; color: var(--accent); margin-bottom: 10px; text-transform: uppercase; }
+    .hiw-step-desc { font-size: 13px; line-height: 1.7; color: var(--text-soft); }
+    .hiw-cycle { display: flex; align-items: flex-start; gap: 14px; background: linear-gradient(135deg, rgba(99,102,241,0.05), rgba(165,180,252,0.07)); border: 1px solid rgba(99,102,241,0.15); border-radius: 14px; padding: 18px 22px; margin-top: 32px; }
+    .hiw-cycle-icon { flex-shrink: 0; width: 32px; height: 32px; border-radius: 50%; background: linear-gradient(135deg, rgba(99,102,241,0.15), rgba(165,180,252,0.15)); display: flex; align-items: center; justify-content: center; margin-top: 2px; }
+    .hiw-cycle-icon svg { width: 16px; height: 16px; color: var(--accent); }
+    .hiw-cycle-text { display: flex; flex-direction: column; gap: 4px; }
+    .hiw-cycle-heading { font-size: 13px; font-weight: 700; color: var(--navy); }
+    .hiw-cycle-body { font-size: 13px; line-height: 1.7; color: var(--text-soft); }
+
+    @media (max-width: 860px) { .hiw-track { grid-template-columns: repeat(2, 1fr); gap: 32px 0; } .hiw-track::before { display: none; } .hiw-step { padding: 0 20px; } }
+    @media (max-width: 540px) { .hiw-track { grid-template-columns: 1fr; gap: 0; } .hiw-step { flex-direction: row; text-align: left; align-items: flex-start; gap: 16px; padding: 0 0 28px 0; position: relative; } .hiw-step:not(:last-child)::after { content: ''; position: absolute; left: 21px; top: 44px; bottom: 0; width: 1px; background: rgba(99,102,241,0.25); } .hiw-track::before { display: none; } .hiw-num-wrap { flex-shrink: 0; margin-bottom: 0; margin-top: 0; } .hiw-step-content { display: flex; flex-direction: column; padding-top: 8px; } }
+
+    footer { background: #f1f5f9; text-align: center; padding: 24px; font-size: 12px; color: var(--text-muted); }
+    footer a { background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; text-decoration: none; }
+
+    @media (max-width: 900px) { .grid { grid-template-columns: repeat(2, 1fr); } .addons-grid { grid-template-columns: 1fr; } .why-grid { grid-template-columns: repeat(2, 1fr); } .stats-bar-inner { overflow-x: auto; } .stat-item { min-width: 130px; } .price-details-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; } .price-detail-item { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.09); padding-bottom: 16px; } .price-detail-item:last-child { border-bottom: none; } .crosssell-cards { grid-template-columns: 1fr; } }
+    @media (max-width: 600px) { .why-grid { grid-template-columns: 1fr; } .price-details-grid { grid-template-columns: 1fr; } .price-detail-item { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.09); padding-bottom: 16px; } .price-detail-item:last-child { border-bottom: none; } }
+    @media (max-width: 600px) {
+      .topbar-inner { padding: 0 16px; height: auto; flex-wrap: wrap; gap: 25px; padding-top: 12px; padding-bottom: 12px; justify-content: center; }
+      .topbar-logo { width: 100%; display: flex; justify-content: center; }
+      .program-nav { width: 100%; justify-content: center; flex-wrap: wrap; }
+      .program-nav a { font-size: 10px; padding: 6px 12px; }
+      .hero { padding: 60px 20px 52px; } .grid { grid-template-columns: 1fr; }
+      main { padding: 40px 20px 60px; } .modal-card { padding: 24px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="topbar">
+  <div class="topbar-inner">
+    <a class="topbar-logo" href="https://www.wisevu.com">
+      <img src="https://www.wisevu.com/wp-content/uploads/2020/10/wisevu-web-design-and-seo-light.svg" alt="Wisevu" />
+    </a>
+    <div class="program-nav">
+      <a href="google-ads.html">Google Ads</a>
+      <a href="bing-ads.html">Bing Ads</a>
+      <a href="youtube-ads.html">YouTube Ads</a>
+      <a href="remarketing.html" class="active">Remarketing</a>
+    </div>
+  </div>
+</nav>
+
+<section class="hero">
+  <canvas id="neural-canvas"></canvas>
+  <div class="hero-inner">
+    <div class="hero-heading-wrap">
+
+      <div class="hf-col hf-left">
+        <div class="hfc hfc-logo hfc-rm1" style="background:radial-gradient(ellipse at 40% 60%, rgba(99,102,241,0.28) 0%, rgba(6,12,40,0.95) 70%);">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#a5b4fc" stroke-width="1.5" style="width:40px;height:40px;"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/><path d="M3.05 11a9 9 0 1 0 .5-2.5"/><path d="M3 4.5v4H7"/></svg>
+        </div>
+        <div class="hfc hfc-results">
+          <div class="hfc-results-text">Re-engage<br>Visitors</div>
+          <div class="hfc-results-arrow">↗</div>
+        </div>
+      </div>
+
+      <div class="hf-col hf-right">
+        <div class="hfc hfc-chart">
+          <div class="hfc-chart-label">Conv. Rate <span class="hfc-chart-arrow">↑</span></div>
+          <div class="hfc-bars">
+            <div class="hfc-bar" style="height:18px;width:14px;background:rgba(99,102,241,0.25);"></div>
+            <div class="hfc-bar" style="height:30px;width:14px;background:rgba(99,102,241,0.4);"></div>
+            <div class="hfc-bar" style="height:24px;width:14px;background:rgba(99,102,241,0.32);"></div>
+            <div class="hfc-bar" style="height:44px;width:14px;background:rgba(165,180,252,0.65);"></div>
+            <div class="hfc-bar" style="height:38px;width:14px;background:rgba(165,180,252,0.5);"></div>
+            <div class="hfc-bar" style="height:52px;width:14px;background:rgba(165,180,252,0.8);"></div>
+          </div>
+        </div>
+        <div class="hfc hfc-logo hfc-rm2" style="background:radial-gradient(ellipse at 60% 40%, rgba(99,102,241,0.18) 0%, rgba(6,12,40,0.95) 70%);">
+          <svg viewBox="0 0 24 24" fill="none" stroke="rgba(165,180,252,0.7)" stroke-width="1.5" style="width:34px;height:34px;"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        </div>
+      </div>
+
+      <div class="hero-brand-badge">
+        <span class="hero-brand-dot"></span>
+        Wisevu™ Remarketing &nbsp;·&nbsp; Display Network · Re-engagement
+      </div>
+      <p class="tier-label">Google Display Remarketing</p>
+      <h1>Remarketing for <span class="program-name">Medical Practices</span></h1>
+      <div class="intensity-badge">
+        <span class="intensity-dot"></span>
+        Included with Google Ads — One-Time Setup
+      </div>
+      <p class="hero-desc">Most website visitors don't book on their first visit. Remarketing keeps your practice visible across the Google Display Network — 35 million websites and apps — while those patients continue researching and comparing. Lower CPC, higher conversion rates, and no ongoing management fee.</p>
+
+      <div class="price-block">
+        <div class="price-block-top">
+          <div class="price-invest-label">One-Time Setup Fee</div>
+          <div class="price-amount"><span class="price-currency">$</span>300</div>
+          <div class="price-period">CAD &nbsp;·&nbsp; Management included with your Google Ads program</div>
+        </div>
+        <div class="price-block-divider"></div>
+        <div class="price-details-grid">
+          <div class="price-detail-item">
+            <div class="price-detail-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+            </div>
+            <div class="price-detail-title">$0/month</div>
+            <div class="price-detail-note">No ongoing management fee</div>
+          </div>
+          <div class="price-detail-item">
+            <div class="price-detail-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+            </div>
+            <div class="price-detail-title">Ad Spend Required</div>
+            <div class="price-detail-note">Min. $150 CAD/month (paid to Google)</div>
+          </div>
+          <div class="price-detail-item">
+            <div class="price-detail-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <div class="price-detail-title">Requires Google Ads</div>
+            <div class="price-detail-note">Active Google Ads program required</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="stats-bar">
+  <div class="stats-bar-inner">
+    <div class="stat-item">
+      <div class="stat-label">Monthly Fee</div>
+      <div class="stat-value">$0/month</div>
+      <div class="stat-note">Managed within your Google Ads program</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-label">Typical CPC</div>
+      <div class="stat-value">Lower CPC</div>
+      <div class="stat-note">Display CPCs significantly below search</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-label">Network</div>
+      <div class="stat-value">35M+ Sites</div>
+      <div class="stat-note">Google Display Network reach</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-label">Requirement</div>
+      <div class="stat-value">Google Ads</div>
+      <div class="stat-note">Active Google Ads program required</div>
+    </div>
+  </div>
+</div>
+
+<main>
+
+  <p class="section-label">What's Included at Setup</p>
+  <h2 class="section-title">Setup Deliverables</h2>
+  <p class="section-desc">The $300 CAD setup fee covers everything needed to launch and maintain your remarketing campaigns — ongoing management is handled as part of your existing Google Ads program.</p>
+
+  <div class="grid">
+    <div class="card">
+      <div class="card-top">
+        <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+        <button class="info-btn" onclick="openModal(this,'card1')" aria-label="More info"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg></button>
+      </div>
+      <div class="card-title">Audience List Setup</div>
+      <div class="card-qty">All site visitors + segments</div>
+    </div>
+    <div class="card">
+      <div class="card-top">
+        <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg></div>
+        <button class="info-btn" onclick="openModal(this,'card2')" aria-label="More info"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg></button>
+      </div>
+      <div class="card-title">Banner Ad Creative</div>
+      <div class="card-qty">All standard sizes</div>
+    </div>
+    <div class="card">
+      <div class="card-top">
+        <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+        <button class="info-btn" onclick="openModal(this,'card3')" aria-label="More info"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg></button>
+      </div>
+      <div class="card-title">Campaign Setup &amp; Configuration</div>
+      <div class="card-qty">Full campaign build</div>
+    </div>
+    <div class="card">
+      <div class="card-top">
+        <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+        <button class="info-btn" onclick="openModal(this,'card4')" aria-label="More info"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg></button>
+      </div>
+      <div class="card-title">Frequency Capping</div>
+      <div class="card-qty">Configured at setup</div>
+    </div>
+    <div class="card">
+      <div class="card-top">
+        <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+        <button class="info-btn" onclick="openModal(this,'card5')" aria-label="More info"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg></button>
+      </div>
+      <div class="card-title">Ongoing Optimization &amp; Reporting</div>
+      <div class="card-qty">Included with Google Ads</div>
+    </div>
+    <div class="card">
+      <div class="card-top">
+        <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
+        <button class="info-btn" onclick="openModal(this,'card6')" aria-label="More info"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg></button>
+      </div>
+      <div class="card-title">Placement Exclusions &amp; Brand Safety</div>
+      <div class="card-qty">Ongoing management</div>
+    </div>
+  </div>
+
+  <!-- Modal shared -->
+  <div class="modal-overlay" id="modal-overlay" onclick="handleOverlayClick(event)">
+    <div class="modal-card">
+      <button class="modal-close" onclick="closeModal()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+      <div class="modal-icon" id="modal-icon"></div>
+      <div class="modal-title" id="modal-title"></div>
+      <div class="modal-qty" id="modal-qty"></div>
+      <div class="modal-divider"></div>
+      <div class="modal-desc" id="modal-desc"></div>
+    </div>
+  </div>
+
+  <div class="hiw-section">
+    <p class="section-label">Getting Started</p>
+    <h2 class="section-title">How It Works</h2>
+    <p class="hiw-intro">Remarketing setup is fast — your audiences are already being built by your existing Google Ads tracking. We turn that data into active campaigns within 1–2 weeks.</p>
+    <div class="hiw-track">
+      <div class="hiw-step">
+        <div class="hiw-num-wrap"><div class="hiw-num">01</div></div>
+        <div class="hiw-step-title">Audience Segmentation</div>
+        <div class="hiw-step-sub">Week 1</div>
+        <div class="hiw-step-desc">We review your existing Google Ads audience data and segment visitors by behavior — all site visitors, service-page visitors, booking-started but not completed, and time-based recency windows. Each segment gets its own targeting strategy and messaging approach.</div>
+      </div>
+      <div class="hiw-step">
+        <div class="hiw-num-wrap"><div class="hiw-num">02</div></div>
+        <div class="hiw-step-title">Creative &amp; Campaign Build</div>
+        <div class="hiw-step-sub">Week 1–2</div>
+        <div class="hiw-step-desc">We design responsive display ads in all standard sizes (including Google's responsive ad format) using your practice branding. Campaigns are configured with audience lists, bid strategies, frequency caps, placement exclusions, and geographic targeting aligned with your service area.</div>
+      </div>
+      <div class="hiw-step">
+        <div class="hiw-num-wrap"><div class="hiw-num">03</div></div>
+        <div class="hiw-step-title">Launch &amp; Monitor</div>
+        <div class="hiw-step-sub">Week 2+</div>
+        <div class="hiw-step-desc">Remarketing campaigns go live. We monitor impression share, click-through rates, conversion activity, and placement quality in the first 30 days — removing low-quality placements and adjusting bids as Google's algorithm learns your audience.</div>
+      </div>
+      <div class="hiw-step">
+        <div class="hiw-num-wrap"><div class="hiw-num">04</div></div>
+        <div class="hiw-step-title">Ongoing Management</div>
+        <div class="hiw-step-sub">Included</div>
+        <div class="hiw-step-desc">Remarketing optimization is included in your Google Ads monthly management — no additional fee. Your account manager monitors performance, refreshes ad creative when needed, refines audience lists, and includes remarketing results in your monthly report.</div>
+      </div>
+    </div>
+    <div class="hiw-cycle">
+      <div class="hiw-cycle-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6"/><path d="M2.5 12a10 10 0 0 1 17.5-7l1.5 3"/><path d="M2.5 22v-6h6"/><path d="M21.5 12a10 10 0 0 1-17.5 7l-1.5-3"/></svg></div>
+      <div class="hiw-cycle-text">
+        <div class="hiw-cycle-heading">Remarketing converts the patients search already found.</div>
+        <div class="hiw-cycle-body">Most patients who click your Google Search ad won't book on their first visit — they compare options, read reviews, and return days later. Remarketing keeps your practice top of mind across the web during that decision period, recovering patients who would otherwise be lost to a competitor.</div>
+      </div>
+    </div>
+  </div>
+
+  <p class="section-label">Optional Add-Ons</p>
+  <h2 class="section-title">Expand Your Program</h2>
+  <div class="addons-grid">
+    <div class="addon-card">
+      <div class="addon-type">Per Production</div>
+      <div class="addon-name">Custom Video Remarketing Creative</div>
+      <div class="addon-price">$450+ <span style="font-size:14px;font-weight:600;">CAD</span></div>
+      <div class="addon-note">Add video remarketing to your display campaigns. Short-form video ads shown to previous visitors on YouTube and across the Display Network. Includes scriptwriting and production.</div>
+    </div>
+    <div class="addon-card">
+      <div class="addon-type">Monthly + Setup</div>
+      <div class="addon-name">Phone Call &amp; Form Tracking</div>
+      <div class="addon-price">$60 <span style="font-size:14px;font-weight:600;">USD/month</span></div>
+      <div class="addon-note">+$300 CAD one-time setup. Dynamic number insertion, call recording and view-through attribution for remarketing-driven conversions.</div>
+    </div>
+  </div>
+
+  <p class="section-label">Why Choose Wisevu</p>
+  <h2 class="section-title">What Sets Us Apart</h2>
+  <div class="why-grid">
+    <div class="why-card">
+      <div class="why-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+      <div class="why-card-title">No Ongoing Fee — Maximum ROI</div>
+      <div class="why-card-desc">Remarketing management is included in your Google Ads program at no extra charge. You pay a one-time $300 setup fee and your ad spend — that's it. For a channel with some of the lowest CPCs in Google's ecosystem, the return is exceptionally strong relative to cost.</div>
+    </div>
+    <div class="why-card">
+      <div class="why-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+      <div class="why-card-title">Medical Practice Audience Expertise</div>
+      <div class="why-card-desc">Healthcare patients research extensively before booking — often visiting multiple websites, reading reviews, and comparing providers over days or weeks. We configure remarketing windows, frequency, and messaging specifically for this patient decision cycle, not generic e-commerce timelines.</div>
+    </div>
+    <div class="why-card">
+      <div class="why-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg></div>
+      <div class="why-card-title">Branded Creative — Not Generic Banners</div>
+      <div class="why-card-desc">We design display ads using your practice branding — logo, colors, photography direction, and messaging that reflects your specialty and patient focus. Generic white-label banner templates undermine the credibility remarketing is meant to reinforce. Your ads should look as trustworthy as your practice.</div>
+    </div>
+    <div class="why-card">
+      <div class="why-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></div>
+      <div class="why-card-title">Placement Exclusions &amp; Brand Safety</div>
+      <div class="why-card-desc">The Google Display Network reaches 35M+ sites — not all of them are appropriate for a medical practice. We configure and actively maintain placement exclusions to keep your ads off low-quality, irrelevant, or brand-unsafe inventory, protecting your reputation while improving campaign efficiency.</div>
+    </div>
+    <div class="why-card">
+      <div class="why-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+      <div class="why-card-title">Frequency Capping — No Ad Fatigue</div>
+      <div class="why-card-desc">Showing the same ad to the same person 20 times a week is annoying and wasteful. We configure intelligent frequency caps to maintain visibility without overexposure — keeping your practice top of mind without driving potential patients away with repetition.</div>
+    </div>
+    <div class="why-card">
+      <div class="why-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+      <div class="why-card-title">Coordinated with Your Search Strategy</div>
+      <div class="why-card-desc">Your remarketing campaigns are managed by the same account manager who runs your Google Search campaigns. We coordinate budgets, audience lists, and conversion data across both channels — so your search and display investment works together, not in silos.</div>
+    </div>
+  </div>
+
+  <p class="section-label">Part of the Google Suite</p>
+  <h2 class="section-title">Explore Companion Programs</h2>
+  <div class="crosssell-wrap">
+    <div class="crosssell-header">
+      <div class="crosssell-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M7.217 10.907a2.25 2.25 0 100 2.186m0-2.186c.18.324.283.696.283 1.093s-.103.77-.283 1.093m0-2.186l9.566-5.314m-9.566 7.5l9.566 5.314m0 0a2.25 2.25 0 103.935 2.186 2.25 2.25 0 00-3.935-2.186zm0-12.814a2.25 2.25 0 103.933-2.185 2.25 2.25 0 00-3.933 2.185z"/>
+        </svg>
+      </div>
+      <div>
+        <div class="crosssell-label">Complete Your Google Suite</div>
+        <div class="crosssell-title">Drive More Traffic to Remarket To</div>
+      </div>
+    </div>
+    <p class="crosssell-intro">Remarketing works best when paired with strong top-of-funnel traffic. More visitors means larger audiences and more patients to re-engage. Add Google Search to capture high intent, Bing Ads to expand reach, and YouTube to build awareness that feeds your remarketing pool.</p>
+    <div class="crosssell-cards">
+      <a href="google-ads.html" class="crosssell-card">
+        <div class="crosssell-card-badge">Google Ads Program</div>
+        <div class="crosssell-card-name">Google Search Ads</div>
+        <div class="crosssell-card-desc">Required for remarketing — and the primary source of high-intent visitor traffic your remarketing campaigns re-engage. The foundation of your patient acquisition strategy and the base program that includes remarketing management.</div>
+        <div class="crosssell-card-price">$500 <span>CAD/month</span></div>
+      </a>
+      <a href="bing-ads.html" class="crosssell-card">
+        <div class="crosssell-card-badge">Bing Ads Program</div>
+        <div class="crosssell-card-name">Microsoft Bing Ads</div>
+        <div class="crosssell-card-desc">Extend your search reach across Microsoft's network — Bing, Yahoo, and DuckDuckGo. More search traffic means more site visitors and larger remarketing audiences to re-engage.</div>
+        <div class="crosssell-card-price">$200 <span>CAD/month</span></div>
+      </a>
+      <a href="youtube-ads.html" class="crosssell-card">
+        <div class="crosssell-card-badge">YouTube Ads Program</div>
+        <div class="crosssell-card-name">YouTube Video Advertising</div>
+        <div class="crosssell-card-desc">Reach prospective patients with video before they search. YouTube viewers who later visit your site become prime remarketing targets — combining video awareness with display re-engagement for a full-funnel approach.</div>
+        <div class="crosssell-card-price">$399 <span>CAD/month</span></div>
+      </a>
+    </div>
+  </div>
+
+  <p class="section-label">Program Notes</p>
+  <h2 class="section-title">Important Details</h2>
+  <div class="notes">
+    <div class="notes-label">Before You Get Started</div>
+    <p><strong>Google Ads is required.</strong> Remarketing management is included at no additional monthly fee within your active Google Ads program. It is not available as a standalone service — your Google Ads account, conversion tracking, and site visitor audiences are the foundation that makes remarketing possible and cost-effective.</p>
+    <p><strong>Ad spend is separate.</strong> The $300 CAD setup fee covers Wisevu's time — it does not include your Google advertising budget. Remarketing ad spend is billed directly to your credit card by Google. We recommend a minimum of $150 CAD/month dedicated to remarketing for meaningful reach across your visitor audiences.</p>
+    <p><strong>Setup takes 1–2 weeks.</strong> The setup fee covers audience list configuration, responsive display ad creative design, campaign build and configuration, frequency capping setup, placement exclusion setup, and initial bid strategy configuration.</p>
+    <p><strong>Ongoing management is included.</strong> After setup, your remarketing campaigns are monitored, optimized, and reported within your existing Google Ads monthly management — no additional fee, no separate contract.</p>
+  </div>
+
+</main>
+
+<footer>
+  <a href="https://www.wisevu.com">wisevu.com</a> &nbsp;·&nbsp; Display Remarketing for Medical Practices
+</footer>
+
+<script>
+var popupData = {
+  card1: {
+    title: "Audience List Setup",
+    qty: "All site visitors + segments",
+    desc: "<p>Effective remarketing depends on the quality and granularity of your audience lists — not just 'everyone who visited the site.' We configure multiple audience segments that allow for differentiated messaging and bidding based on visitor intent.</p><p>Standard audience segments we set up include: <strong>All site visitors</strong> (30-day window), <strong>Service page visitors</strong> (visitors who viewed specific treatment or service pages — highest intent), <strong>Abandoned booking visitors</strong> (visitors who started but didn't complete a booking or contact form), <strong>Homepage-only visitors</strong> (lowest intent — lower bids), and <strong>Recency-based segments</strong> (1–7 days, 8–14 days, 15–30 days — bids decrease as recency increases).</p><p>Where patient list data is available (HIPAA-compliant customer match), we can also configure patient re-engagement audiences for specific follow-up campaigns.</p>"
+  },
+  card2: {
+    title: "Banner Ad Creative",
+    qty: "All standard sizes",
+    desc: "<p>We design responsive display ads using your practice branding — not generic white-label templates. Your remarketing ads should reinforce the credibility and professionalism that drove a visitor to your website in the first place.</p><p>Ad creative includes: Google Responsive Display Ads (multiple headline, description, logo, and image combinations that Google automatically assembles and tests), plus static banner ads in standard IAB sizes: 300×250 (medium rectangle), 728×90 (leaderboard), 160×600 (wide skyscraper), 300×600 (half page), and 320×50 (mobile banner).</p><p>Static banners ensure your ads appear exactly as designed in placements where responsive ads don't render well. Creative is refreshed periodically to prevent ad fatigue — included in your ongoing management.</p>"
+  },
+  card3: {
+    title: "Campaign Setup & Configuration",
+    qty: "Full campaign build",
+    desc: "<p>We build your remarketing campaigns inside your existing Google Ads account — not in a separate account — so performance data, audience lists, and conversion tracking are shared seamlessly with your search campaigns.</p><p>Campaign configuration includes: campaign structure by audience segment (separate ad groups per audience type for cleaner reporting and bid control), bid strategy configuration (Target CPA once sufficient conversion data exists; manual CPC during the learning phase), geographic targeting aligned with your service area, ad scheduling to concentrate spend on high-conversion windows, and device bid adjustments based on your historical conversion data from search campaigns.</p><p>All campaigns are documented and built for full transparency — you have admin access to view and verify every setting at any time.</p>"
+  },
+  card4: {
+    title: "Frequency Capping",
+    qty: "Configured at setup",
+    desc: "<p>Frequency capping is one of the most important — and most commonly misconfigured — settings in display remarketing. Without it, the same visitor can see your ad dozens of times per day, which drives up costs, wastes budget, and damages brand perception.</p><p>We configure frequency caps at the campaign and ad group level based on audience segment: high-intent visitors (service page viewers, abandoned bookers) receive higher frequency caps during their first 7 days; lower-intent visitors and those past the 14-day mark receive more conservative frequency limits to balance visibility with cost.</p><p>Frequency settings are monitored monthly and adjusted based on actual impression frequency data from your campaign reports.</p>"
+  },
+  card5: {
+    title: "Ongoing Optimization & Reporting",
+    qty: "Included with Google Ads",
+    desc: "<p>After the initial setup, remarketing optimization is handled as part of your Google Ads monthly management — at no additional charge. Your account manager monitors remarketing performance alongside your search campaigns and includes the results in your monthly report.</p><p>Ongoing activities include: placement performance review and exclusion of low-quality sites, audience performance analysis and bid adjustments by segment, creative refresh when ad fatigue indicators appear (declining CTR, rising frequency), budget reallocation between audience segments based on conversion data, and monthly reporting on impressions, clicks, view-through conversions, and cost-per-conversion.</p><p>Where remarketing assists search conversions (a patient clicked a remarketing ad before ultimately converting on a search ad), we track and report the assisted conversion value — giving you a complete picture of remarketing's contribution.</p>"
+  },
+  card6: {
+    title: "Placement Exclusions & Brand Safety",
+    qty: "Ongoing management",
+    desc: "<p>The Google Display Network includes millions of websites, apps, and YouTube channels — not all of them are appropriate environments for a medical practice's advertising. Without active placement management, your ads can appear on low-quality content farms, mobile apps that generate accidental clicks, or content that conflicts with your brand's positioning.</p><p>We apply two layers of exclusion: a base layer of standard medical-practice exclusions (applied at setup based on our experience managing healthcare accounts), and an ongoing review layer where we audit placement reports monthly and exclude specific low-performing or brand-unsafe placements discovered in your campaigns.</p><p>We also configure topic exclusions (content categories that are not appropriate for medical advertising) and content keyword exclusions at the campaign level. These exclusions improve both brand safety and campaign efficiency — reducing wasted spend on inventory that doesn't convert.</p>"
+  }
+};
+
+function openModal(btn, id) {
+  var data = popupData[id];
+  if (!data) return;
+  var card = btn.closest('.card');
+  document.getElementById('modal-icon').innerHTML = card.querySelector('.card-icon').innerHTML;
+  document.getElementById('modal-title').textContent = data.title;
+  document.getElementById('modal-qty').textContent = data.qty;
+  document.getElementById('modal-desc').innerHTML = data.desc;
+  document.getElementById('modal-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal() {
+  document.getElementById('modal-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function handleOverlayClick(e) {
+  if (e.target === document.getElementById('modal-overlay')) closeModal();
+}
+document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeModal(); });
+
+/* Neural network canvas */
+(function() {
+  var canvas = document.getElementById('neural-canvas');
+  var ctx = canvas.getContext('2d');
+  function resize() { canvas.width = canvas.offsetWidth; canvas.height = canvas.offsetHeight; }
+  var nodes = [], NODE_COUNT = 72, MAX_DIST = 135;
+  function Node() {
+    this.x = Math.random() * canvas.width; this.y = Math.random() * canvas.height;
+    this.vx = (Math.random() - 0.5) * 0.22; this.vy = (Math.random() - 0.5) * 0.22;
+    this.r = Math.random() * 1.5 + 0.8; this.alpha = Math.random() * 0.4 + 0.25;
+    this.pulse = Math.random() * Math.PI * 2; this.pulseSpeed = 0.01 + Math.random() * 0.015;
+    this.t = Math.random();
+  }
+  Node.prototype.update = function() {
+    this.x += this.vx; this.y += this.vy; this.pulse += this.pulseSpeed;
+    if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+    if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+  };
+  Node.prototype.getColor = function(alpha) {
+    var r = Math.round(99 + this.t * (165 - 99)), g = Math.round(102 + this.t * (180 - 102)), b = Math.round(241 + this.t * (252 - 241));
+    return 'rgba(' + r + ',' + g + ',' + b + ',' + alpha + ')';
+  };
+  Node.prototype.draw = function() {
+    var pa = this.alpha + Math.sin(this.pulse) * 0.15;
+    var grd = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.r * 5);
+    grd.addColorStop(0, this.getColor(pa * 0.35)); grd.addColorStop(1, this.getColor(0));
+    ctx.beginPath(); ctx.arc(this.x, this.y, this.r * 5, 0, Math.PI * 2); ctx.fillStyle = grd; ctx.fill();
+    ctx.beginPath(); ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2); ctx.fillStyle = this.getColor(pa); ctx.fill();
+  };
+  function init() { nodes = []; for (var i = 0; i < NODE_COUNT; i++) nodes.push(new Node()); }
+  function drawConstellation() {
+    var t = Date.now() / 9000, cx = canvas.width / 2 + Math.sin(t) * 14, cy = canvas.height * 0.38 + Math.cos(t * 0.65) * 10;
+    var sc = Math.min(canvas.width * 0.30, canvas.height * 0.56);
+    var S = { alpha: { x: -0.36, y: -0.08, r: 1.3, a: 0.48 }, beta: { x: -0.18, y: 0.12, r: 1.1, a: 0.42 }, gamma: { x: 0.00, y: -0.04, r: 1.5, a: 0.52 }, delta: { x: 0.18, y: 0.14, r: 1.1, a: 0.42 }, epsilon: { x: 0.36, y: -0.06, r: 1.2, a: 0.44 } };
+    var lines = [['alpha','beta'],['beta','gamma'],['gamma','delta'],['delta','epsilon']];
+    ctx.save();
+    lines.forEach(function(l) {
+      var a = S[l[0]], b = S[l[1]], ax = cx + a.x * sc, ay = cy + a.y * sc, bx = cx + b.x * sc, by = cy + b.y * sc;
+      var grad = ctx.createLinearGradient(ax, ay, bx, by);
+      grad.addColorStop(0, 'rgba(99,102,241,' + (a.a * 0.38) + ')'); grad.addColorStop(1, 'rgba(165,180,252,' + (b.a * 0.38) + ')');
+      ctx.beginPath(); ctx.moveTo(ax, ay); ctx.lineTo(bx, by); ctx.strokeStyle = grad; ctx.lineWidth = 0.7; ctx.stroke();
+    });
+    Object.keys(S).forEach(function(k) {
+      var s = S[k], sx = cx + s.x * sc, sy = cy + s.y * sc;
+      var grd = ctx.createRadialGradient(sx, sy, 0, sx, sy, s.r * 5);
+      grd.addColorStop(0, 'rgba(99,102,241,' + (s.a * 0.35) + ')'); grd.addColorStop(1, 'rgba(165,180,252,0)');
+      ctx.beginPath(); ctx.arc(sx, sy, s.r * 5, 0, Math.PI * 2); ctx.fillStyle = grd; ctx.fill();
+      ctx.beginPath(); ctx.arc(sx, sy, s.r, 0, Math.PI * 2); ctx.fillStyle = 'rgba(165,180,252,' + s.a + ')'; ctx.fill();
+    });
+    ctx.restore();
+  }
+  function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    var _t = Date.now() / 9000, ezx = canvas.width / 2 + Math.sin(_t) * 14, ezy = canvas.height * 0.38 + Math.cos(_t * 0.65) * 10;
+    var ezr = Math.min(canvas.width * 0.30, canvas.height * 0.56) * 0.52;
+    function inZone(x, y) { var dx = x - ezx, dy = y - ezy; return dx*dx + dy*dy < ezr*ezr; }
+    for (var i = 0; i < nodes.length; i++) {
+      if (inZone(nodes[i].x, nodes[i].y)) continue;
+      for (var j = i + 1; j < nodes.length; j++) {
+        if (inZone(nodes[j].x, nodes[j].y)) continue;
+        var dx = nodes[i].x - nodes[j].x, dy = nodes[i].y - nodes[j].y, dist = Math.sqrt(dx*dx + dy*dy);
+        if (dist < MAX_DIST) {
+          var la = (1 - dist / MAX_DIST) * 0.2;
+          var grad = ctx.createLinearGradient(nodes[i].x, nodes[i].y, nodes[j].x, nodes[j].y);
+          grad.addColorStop(0, nodes[i].getColor(la)); grad.addColorStop(1, nodes[j].getColor(la));
+          ctx.beginPath(); ctx.moveTo(nodes[i].x, nodes[i].y); ctx.lineTo(nodes[j].x, nodes[j].y); ctx.strokeStyle = grad; ctx.lineWidth = 0.7; ctx.stroke();
+        }
+      }
+    }
+    nodes.forEach(function(n) { n.update(); if (!inZone(n.x, n.y)) n.draw(); });
+    drawConstellation();
+    requestAnimationFrame(animate);
+  }
+  window.addEventListener('resize', function() { resize(); init(); });
+  resize(); init(); animate();
+})();
+</script>
+</body>
+</html>
