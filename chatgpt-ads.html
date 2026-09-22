@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Google Ads Management — Medical Practice Marketing | Wisevu</title>
+  <title>ChatGPT Paid Ads Management — Medical Practice Marketing | Wisevu</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet" />
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet" />
   <style>
@@ -14,6 +14,7 @@
       --gray-bg: #f1f5f9; --gray-line: #dde5ef; --text: #1a2535;
       --text-soft: #4a5f78; --text-muted: #7a94b0; --white: #ffffff;
       --gradient: linear-gradient(135deg, #6366f1, #a5b4fc); --border: #e5e7eb;
+      --gpt-green: #10a37f; --gpt-green-light: #e6f7f4;
     }
     html { scroll-behavior: smooth; }
     body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; background: var(--gray-bg); color: var(--text); min-height: 100vh; -webkit-font-smoothing: antialiased; }
@@ -40,18 +41,16 @@
     .intensity-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.11); border-radius: 100px; padding: 5px 14px 5px 10px; margin-bottom: 28px; font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.38); letter-spacing: 0.08em; text-transform: uppercase; }
     .intensity-dot { width: 8px; height: 8px; border-radius: 50%; background: #6ee7b7; flex-shrink: 0; box-shadow: 0 0 6px rgba(110,231,183,0.5); }
     .hero-desc { max-width: 580px; margin: 0 auto 44px; font-size: 15px; line-height: 1.8; color: rgba(255,255,255,0.62); font-weight: 400; }
-    /* Hero brand badge */
-    .hero-brand-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(5,10,38,0.75); border: 1.5px solid rgba(59,130,246,0.8); box-shadow: 0 0 12px rgba(59,130,246,0.25), inset 0 0 8px rgba(59,130,246,0.08); color: rgba(255,255,255,0.92); font-size: 13px; font-weight: 800; letter-spacing: 0.18em; text-transform: uppercase; padding: 9px 24px; border-radius: 100px; margin-bottom: 16px; }
+    .hero-brand-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(5,10,38,0.75); border: 1.5px solid rgba(16,163,127,0.8); box-shadow: 0 0 12px rgba(16,163,127,0.25), inset 0 0 8px rgba(16,163,127,0.08); color: rgba(255,255,255,0.92); font-size: 13px; font-weight: 800; letter-spacing: 0.18em; text-transform: uppercase; padding: 9px 24px; border-radius: 100px; margin-bottom: 16px; }
     .hero-brand-dot { width: 6px; height: 6px; background: rgba(255,255,255,0.9); border-radius: 50%; flex-shrink: 0; }
-    /* Floating cards */
     .hero-heading-wrap { position: relative; max-width: 800px; width: 100%; display: flex; flex-direction: column; align-items: center; overflow: visible; }
     .hf-col { position: absolute; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 14px; z-index: 3; pointer-events: none; opacity: 0.55; }
     .hf-left { left: -190px; align-items: flex-start; }
     .hf-right { right: -190px; align-items: flex-end; }
     .hfc { background: rgba(6,12,40,0.88); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); border: 1px solid rgba(255,255,255,0.1); border-radius: 18px; }
     .hfc-logo { width: 96px; height: 96px; display: flex; align-items: center; justify-content: center; }
-    .hfc-google { transform: rotate(-9deg); box-shadow: 0 8px 32px rgba(0,0,0,0.4); }
-    .hfc-bing   { transform: rotate(9deg);  box-shadow: 0 8px 32px rgba(0,0,0,0.4); }
+    .hfc-gpt { transform: rotate(-9deg); box-shadow: 0 8px 32px rgba(0,0,0,0.4); }
+    .hfc-google { transform: rotate(9deg); box-shadow: 0 8px 32px rgba(0,0,0,0.4); }
     .hfc-results { padding: 14px 44px 14px 16px; position: relative; min-width: 158px; transform: rotate(-5deg); box-shadow: 0 6px 24px rgba(0,0,0,0.35); }
     .hfc-results-text { font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.85); line-height: 1.9; }
     .hfc-results-arrow { position: absolute; top: 12px; right: 12px; color: #6ee7b7; font-size: 15px; font-weight: 900; }
@@ -75,7 +74,6 @@
     .price-detail-icon svg { width: 20px; height: 20px; color: #a5b4fc; }
     .price-detail-title { font-size: 13px; font-weight: 700; color: #fff; line-height: 1.3; }
     .price-detail-note { font-size: 11.5px; color: rgba(255,255,255,0.42); line-height: 1.5; }
-    .price-sub { display: none; }
 
     /* Stats bar */
     .stats-bar { background: var(--navy-mid); border-bottom: 1px solid rgba(255,255,255,0.06); }
@@ -133,9 +131,6 @@
     .addon-name { font-size: 15px; font-weight: 700; color: var(--navy); line-height: 1.35; }
     .addon-price { font-size: 22px; font-weight: 900; letter-spacing: -0.02em; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
     .addon-note { font-size: 12px; color: var(--text-muted); line-height: 1.5; margin-top: 2px; }
-    .example-link { display: inline-flex; align-items: center; gap: 5px; margin-top: 8px; font-size: 11.5px; font-weight: 700; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; text-decoration: none; letter-spacing: 0.02em; }
-    .example-link svg { width: 13px; height: 13px; color: var(--accent); flex-shrink: 0; -webkit-text-fill-color: initial; }
-    .example-link:hover { opacity: 0.75; }
 
     /* Why Wisevu feature cards */
     .why-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 48px; }
@@ -189,14 +184,15 @@
     .hiw-cycle-heading { font-size: 13px; font-weight: 700; color: var(--navy); }
     .hiw-cycle-body { font-size: 13px; line-height: 1.7; color: var(--text-soft); }
 
-    /* How It Works — Tablet */
+    /* New platform badge */
+    .platform-badge { display: inline-flex; align-items: center; gap: 10px; background: rgba(16,163,127,0.12); border: 1px solid rgba(16,163,127,0.35); border-radius: 12px; padding: 10px 18px; margin-bottom: 48px; font-size: 13px; font-weight: 600; color: var(--navy); }
+    .platform-badge-dot { width: 8px; height: 8px; border-radius: 50%; background: #10a37f; flex-shrink: 0; }
+
     @media (max-width: 860px) {
       .hiw-track { grid-template-columns: repeat(2, 1fr); gap: 32px 0; }
       .hiw-track::before { display: none; }
       .hiw-step { padding: 0 20px; }
     }
-
-    /* How It Works — Mobile */
     @media (max-width: 540px) {
       .hiw-track { grid-template-columns: 1fr; gap: 0; }
       .hiw-step { flex-direction: row; text-align: left; align-items: flex-start; gap: 16px; padding: 0 0 28px 0; position: relative; }
@@ -215,7 +211,7 @@
     @media (max-width: 600px) {
       .topbar-inner { padding: 0 16px; height: auto; flex-wrap: wrap; gap: 25px; padding-top: 12px; padding-bottom: 12px; justify-content: center; }
       .topbar-logo { width: 100%; display: flex; justify-content: center; }
-      .program-nav { width: 100%; justify-content: center; }
+      .program-nav { width: 100%; justify-content: center; flex-wrap: wrap; }
       .program-nav a { font-size: 10px; padding: 6px 14px; }
       .hero { padding: 60px 20px 52px; } .grid { grid-template-columns: 1fr; } .addons-grid { grid-template-columns: 1fr; }
       main { padding: 40px 20px 60px; } .modal-card { padding: 24px; }
@@ -230,10 +226,10 @@
       <img src="https://www.wisevu.com/wp-content/uploads/2020/10/wisevu-web-design-and-seo-light.svg" alt="Wisevu" />
     </a>
     <div class="program-nav">
-      <a href="google-ads.html" class="active">Google Ads</a>
+      <a href="google-ads.html">Google Ads</a>
       <a href="bing-ads.html">Bing Ads</a>
       <a href="youtube-ads.html">YouTube Ads</a>
-      <a href="chatgpt-ads.html">ChatGPT Ads</a>
+      <a href="chatgpt-ads.html" class="active">ChatGPT Ads</a>
     </div>
   </div>
 </nav>
@@ -246,19 +242,19 @@
 
       <!-- Floating card — left -->
       <div class="hf-col hf-left">
-        <div class="hfc hfc-logo hfc-google" style="background:radial-gradient(ellipse at 40% 60%, rgba(66,133,244,0.18) 0%, rgba(6,12,40,0.95) 70%);">
-          <i class="fa-brands fa-google" style="font-size:40px; background: linear-gradient(135deg, #4285F4, #EA4335, #FBBC05, #34A853); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;"></i>
+        <div class="hfc hfc-logo hfc-gpt" style="background:radial-gradient(ellipse at 40% 60%, rgba(16,163,127,0.22) 0%, rgba(6,12,40,0.95) 70%);">
+          <svg viewBox="0 0 41 41" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:44px;height:44px;"><path d="M37.532 16.87a9.963 9.963 0 00-.856-8.184 10.078 10.078 0 00-10.855-4.835 9.964 9.964 0 00-7.505-3.354 10.079 10.079 0 00-9.612 6.977 9.967 9.967 0 00-6.664 4.834 10.079 10.079 0 001.24 11.817 9.965 9.965 0 00.856 8.185 10.079 10.079 0 0010.855 4.835 9.965 9.965 0 007.504 3.354 10.079 10.079 0 009.617-6.981 9.967 9.967 0 006.663-4.834 10.079 10.079 0 00-1.243-11.814zM22.498 37.886a7.474 7.474 0 01-4.799-1.735c.061-.033.168-.091.237-.134l7.964-4.6a1.294 1.294 0 00.655-1.134V19.054l3.366 1.944a.12.12 0 01.066.092v9.299a7.505 7.505 0 01-7.49 7.496zM6.392 31.006a7.471 7.471 0 01-.894-5.023c.06.036.162.099.237.141l7.964 4.6a1.297 1.297 0 001.308 0l9.724-5.614v3.888a.12.12 0 01-.048.103l-8.051 4.649a7.504 7.504 0 01-10.24-2.744zM4.297 13.62A7.469 7.469 0 018.2 10.333c0 .068-.004.19-.004.274v9.201a1.294 1.294 0 00.654 1.132l9.723 5.614-3.366 1.944a.12.12 0 01-.114.012L7.044 23.86a7.504 7.504 0 01-2.747-10.24zm27.658 6.437l-9.724-5.615 3.367-1.943a.121.121 0 01.114-.012l8.048 4.648a7.498 7.498 0 01-1.158 13.528v-9.476a1.293 1.293 0 00-.647-1.13zm3.35-5.043c-.059-.037-.162-.099-.236-.141l-7.965-4.6a1.298 1.298 0 00-1.308 0l-9.723 5.614v-3.888a.12.12 0 01.048-.103l8.05-4.645a7.497 7.497 0 0111.135 7.763zm-21.063 6.929l-3.367-1.944a.12.12 0 01-.065-.092v-9.299a7.497 7.497 0 0112.293-5.756 6.94 6.94 0 00-.236.134l-7.965 4.6a1.294 1.294 0 00-.654 1.132l-.006 11.225zm1.829-3.943l4.33-2.501 4.332 2.5v4.999l-4.331 2.5-4.331-2.5V18z" fill="#10a37f"/></svg>
         </div>
         <div class="hfc hfc-results">
-          <div class="hfc-results-text">More Patients<br>Higher Intent<br>Real Results</div>
+          <div class="hfc-results-text">AI-Powered<br>Patient Reach<br>Real Results</div>
           <div class="hfc-results-arrow">↗</div>
         </div>
       </div>
 
       <!-- Floating card — right -->
       <div class="hf-col hf-right">
-        <div class="hfc hfc-logo hfc-bing" style="background: radial-gradient(ellipse at 40% 60%, rgba(0,120,215,0.18) 0%, rgba(6,12,40,0.95) 70%);">
-          <i class="fa-brands fa-microsoft" style="font-size:40px; color:#00a4ef;"></i>
+        <div class="hfc hfc-logo hfc-google" style="background: radial-gradient(ellipse at 40% 60%, rgba(66,133,244,0.18) 0%, rgba(6,12,40,0.95) 70%);">
+          <i class="fa-brands fa-google" style="font-size:40px; background: linear-gradient(135deg, #4285F4, #EA4335, #FBBC05, #34A853); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;"></i>
         </div>
         <div class="hfc hfc-chart">
           <div class="hfc-chart-label">
@@ -276,14 +272,14 @@
       </div>
 
       <!-- Centered heading content -->
-      <div class="hero-brand-badge"><span class="hero-brand-dot"></span>Wisevu™ Google Ads</div>
-      <p class="tier-label">Patient Acquisition &nbsp;·&nbsp; Google Search</p>
-      <h1>Google Ads for<br><span class="program-name">Medical Practices</span></h1>
-      <div class="intensity-badge"><span class="intensity-dot"></span>Google Partner Since 2009</div>
+      <div class="hero-brand-badge"><span class="hero-brand-dot"></span>Wisevu™ ChatGPT Ads</div>
+      <p class="tier-label">Patient Acquisition &nbsp;·&nbsp; AI-Powered Search</p>
+      <h1>ChatGPT Ads for<br><span class="program-name">Medical Practices</span></h1>
+      <div class="intensity-badge"><span class="intensity-dot"></span>Early Mover Advantage — New Channel</div>
 
     </div><!-- /hero-heading-wrap -->
 
-    <p class="hero-desc">We connect ad spend to qualified calls and booked consultations — not just clicks and form fills. Wisevu's Google Ads program is built specifically for medical practices: we capture high-intent patients the moment they're searching, optimize every campaign toward real patient outcomes, and protect your spend with click fraud prevention and conversion tracking from day one.</p>
+    <p class="hero-desc">We connect ad spend to qualified calls and booked consultations — not just clicks and impressions. As patients increasingly turn to ChatGPT to find healthcare providers, Wisevu's ChatGPT Ads program puts your medical practice in front of high-intent patients at the moment they ask an AI for a provider recommendation.</p>
     <div class="price-block">
       <div class="price-block-top">
         <div class="price-invest-label">Management Fee</div>
@@ -296,15 +292,15 @@
           <div class="price-detail-icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M4.93 4.93a10 10 0 0 0 0 14.14"/></svg>
           </div>
-          <div class="price-detail-title">$999 One-Time Setup</div>
-          <div class="price-detail-note">Research, strategy, campaign build, GTM/GA4 &amp; conversion tracking, and click fraud protection. Advanced call tracking is a separate add-on.</div>
+          <div class="price-detail-title">$1,200 One-Time Setup</div>
+          <div class="price-detail-note">Account structure, audience targeting, conversion tracking, and campaign build optimized for OpenAI's advertising platform.</div>
         </div>
         <div class="price-detail-item">
           <div class="price-detail-icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
           </div>
           <div class="price-detail-title">Minimum Ad Spend<br><span style="font-weight:800;">$600 CAD / month</span></div>
-          <div class="price-detail-note">Paid directly to Google — not included in management fee</div>
+          <div class="price-detail-note">Paid directly to OpenAI — not included in management fee</div>
         </div>
         <div class="price-detail-item">
           <div class="price-detail-icon">
@@ -321,9 +317,9 @@
 <div class="stats-bar">
   <div class="stats-bar-inner">
     <div class="stat-item">
-      <div class="stat-label">Certified Partner</div>
-      <div class="stat-value">Google Partner</div>
-      <div class="stat-note">Since 2009</div>
+      <div class="stat-label">Platform</div>
+      <div class="stat-value">ChatGPT Ads</div>
+      <div class="stat-note">OpenAI's advertising platform</div>
     </div>
     <div class="stat-item">
       <div class="stat-label">Conversion Focus</div>
@@ -344,6 +340,12 @@
 </div>
 
 <main>
+
+  <div class="platform-badge">
+    <span class="platform-badge-dot"></span>
+    <span><strong>Emerging Channel:</strong> ChatGPT Ads is a rapidly evolving advertising platform. As with any new channel, capabilities, targeting options, and pricing may change. Wisevu monitors platform developments closely and adapts campaign strategy accordingly.</span>
+  </div>
+
   <p class="section-label">What's Included</p>
   <h2 class="section-title">Monthly Deliverables</h2>
   <div class="grid">
@@ -360,27 +362,27 @@
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
         </button>
       </div>
-      <div class="card-title">Google Ads Campaign Management</div>
+      <div class="card-title">ChatGPT Ads Campaign Management</div>
       <div class="card-qty">Up to 3 campaigns</div>
     </div>
 
-    <!-- Card 2: Keyword Research -->
+    <!-- Card 2: Audience & Prompt Strategy -->
     <div class="card">
       <div class="card-top">
         <div class="card-icon">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"/>
+            <path stroke-linecap="round" stroke-linejoin="round" d="M8.625 9.75a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375m-13.5 3.01c0 1.6 1.123 2.994 2.707 3.227 1.087.16 2.185.283 3.293.369V21l4.184-4.183a1.14 1.14 0 01.778-.332 48.294 48.294 0 005.83-.498c1.585-.233 2.708-1.626 2.708-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z"/>
           </svg>
         </div>
         <button class="info-btn" onclick="openModal(this,'card2')" aria-label="Learn more">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
         </button>
       </div>
-      <div class="card-title">Keyword Research &amp; Strategy</div>
+      <div class="card-title">Audience &amp; Prompt Strategy</div>
       <div class="card-qty">Every campaign</div>
     </div>
 
-    <!-- Card 3: Ad Copy -->
+    <!-- Card 3: Ad Copy & Creative -->
     <div class="card">
       <div class="card-top">
         <div class="card-icon">
@@ -392,7 +394,7 @@
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
         </button>
       </div>
-      <div class="card-title">Ad Copy &amp; Extension Development</div>
+      <div class="card-title">Ad Copy &amp; Creative Development</div>
       <div class="card-qty">Every campaign</div>
     </div>
 
@@ -412,7 +414,7 @@
       <div class="card-qty">Ongoing</div>
     </div>
 
-    <!-- Card 5: Click Fraud Prevention -->
+    <!-- Card 5: Conversion Tracking -->
     <div class="card">
       <div class="card-top">
         <div class="card-icon">
@@ -424,7 +426,7 @@
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
         </button>
       </div>
-      <div class="card-title">Click Fraud Prevention</div>
+      <div class="card-title">Conversion Tracking &amp; Outcome Measurement</div>
       <div class="card-qty">Ongoing</div>
     </div>
 
@@ -440,7 +442,7 @@
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
         </button>
       </div>
-      <div class="card-title">Advanced Reporting &amp; Conversion Tracking</div>
+      <div class="card-title">Advanced Reporting</div>
       <div class="card-qty">Monthly</div>
     </div>
 
@@ -466,7 +468,7 @@
   <div class="hiw-section">
     <p class="section-label">How It Works</p>
     <h2 class="section-title">From Strategy to Patient Acquisition</h2>
-    <p class="hiw-intro">A structured process for building, launching, and continuously improving your Google Ads campaigns to attract patients who are actively searching for your services.</p>
+    <p class="hiw-intro">A structured process for building, launching, and continuously improving your ChatGPT Ads campaigns to reach patients who are asking AI for healthcare provider recommendations.</p>
 
     <div class="hiw-track">
 
@@ -475,7 +477,7 @@
         <div class="hiw-step-content">
           <div class="hiw-step-title">Research &amp; Setup</div>
           <div class="hiw-step-sub">Build the foundation</div>
-          <div class="hiw-step-desc">We research your market, competitors, and high-intent keywords. Then we set up your GTM, GA4, conversion tracking, click fraud protection, and campaign structure — everything needed before a single dollar is spent.</div>
+          <div class="hiw-step-desc">We research your market, identify the AI-search behaviours most relevant to your treatments, and configure your OpenAI Ads account — including conversion tracking and campaign structure — before a single dollar is spent.</div>
         </div>
       </div>
 
@@ -484,7 +486,7 @@
         <div class="hiw-step-content">
           <div class="hiw-step-title">Campaign Build</div>
           <div class="hiw-step-sub">Create ads that convert</div>
-          <div class="hiw-step-desc">We develop compelling ad copy, responsive search ads, and all available extensions — sitelinks, callouts, call extensions, and structured snippets — crafted to attract the patients most likely to call, book, and show up.</div>
+          <div class="hiw-step-desc">We develop ad copy and creative assets tailored to how patients phrase healthcare questions in conversational AI — crafted to attract the patients most likely to call, book, and show up.</div>
         </div>
       </div>
 
@@ -492,8 +494,8 @@
         <div class="hiw-num-wrap"><span class="hiw-num">03</span></div>
         <div class="hiw-step-content">
           <div class="hiw-step-title">Launch &amp; Monitor</div>
-          <div class="hiw-step-sub">Reach patients actively searching</div>
-          <div class="hiw-step-desc">Campaigns go live with geo-targeting, scheduling, and negative keyword lists in place. We monitor performance daily in the early phase — tracking qualified calls and form submissions, catching issues quickly, and protecting your ad spend from the start.</div>
+          <div class="hiw-step-sub">Reach patients asking AI</div>
+          <div class="hiw-step-desc">Campaigns go live with audience targeting, geographic parameters, and conversion tracking in place. We monitor performance daily in the early phase — tracking qualified calls and form submissions to protect your spend from the start.</div>
         </div>
       </div>
 
@@ -502,7 +504,7 @@
         <div class="hiw-step-content">
           <div class="hiw-step-title">Optimize &amp; Scale</div>
           <div class="hiw-step-sub">Turn data into better results</div>
-          <div class="hiw-step-desc">Ongoing bid adjustments, keyword refinements, search term mining, and Quality Score improvements continuously lower your cost per booked patient — while improving the intent and quality of the patients your ads attract.</div>
+          <div class="hiw-step-desc">Ongoing bid adjustments, audience refinements, and creative testing continuously lower your cost per booked patient — while improving the intent and quality of patients your ads attract.</div>
         </div>
       </div>
 
@@ -513,8 +515,8 @@
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6"/><path d="M2.5 12a10 10 0 0 1 17.5-7l1.5 3"/><path d="M2.5 22v-6h6"/><path d="M21.5 12a10 10 0 0 1-17.5 7l-1.5-3"/></svg>
       </div>
       <div class="hiw-cycle-text">
-        <div class="hiw-cycle-heading">Google Ads rewards consistency and data.</div>
-        <div class="hiw-cycle-body">Every search term, click, and conversion feeds back into your campaigns — improving keyword targeting, Quality Scores, and bid strategy so your cost per patient acquisition decreases over time.</div>
+        <div class="hiw-cycle-heading">AI search is growing fast — and so is the opportunity.</div>
+        <div class="hiw-cycle-body">As more patients turn to ChatGPT to find and evaluate healthcare providers, early-mover practices build familiarity and data advantages. Every conversion we track feeds back into campaign optimization — improving targeting and lowering your cost per acquired patient over time.</div>
       </div>
     </div>
   </div>
@@ -530,45 +532,33 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
         </button>
       </div>
-      <div class="addon-name">Additional Search Campaign</div>
+      <div class="addon-name">Additional Campaign</div>
       <div class="addon-price">$150 <span style="font-size:14px;font-weight:600;">CAD/month</span></div>
-      <div class="addon-note">Add a campaign for an additional treatment, service, or location beyond what's included in your base program.</div>
+      <div class="addon-note">Add a campaign for an additional treatment, service line, or geographic target beyond the three included in your base program.</div>
     </div>
 
     <div class="addon-card">
       <div class="card-top">
         <div class="addon-type">Monthly + Setup</div>
-        <button class="info-btn" onclick="openAddonModal('addon5')" aria-label="More info">
+        <button class="info-btn" onclick="openAddonModal('addon2')" aria-label="More info">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
         </button>
       </div>
       <div class="addon-name">Phone Call &amp; Form Tracking</div>
       <div class="addon-price">$60 <span style="font-size:14px;font-weight:600;">USD/month</span></div>
-      <div class="addon-note">+$300 CAD one-time setup. The $60 USD/month is a vendor pass-through (billed in USD by the call tracking platform). Base program includes GA4 form tracking — this add-on adds dynamic number insertion, call recording &amp; campaign-level attribution.</div>
+      <div class="addon-note">+$300 CAD one-time setup. The $60 USD/month is a vendor pass-through (billed in USD by the call tracking platform). Adds dynamic number insertion, call recording &amp; campaign-level attribution.</div>
     </div>
 
     <div class="addon-card">
       <div class="card-top">
         <div class="addon-type">One-Time Setup</div>
-        <button class="info-btn" onclick="openAddonModal('addon7')" aria-label="More info">
+        <button class="info-btn" onclick="openAddonModal('addon3')" aria-label="More info">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
         </button>
       </div>
       <div class="addon-name">CRM &amp; Offline Conversion Tracking</div>
       <div class="addon-price">Custom <span style="font-size:14px;font-weight:600;">quote</span></div>
-      <div class="addon-note">Connect your CRM or booking system so Google sees which ad clicks became booked patients — not just form submissions. Prevents Google from optimizing toward spam and unqualified leads.</div>
-    </div>
-
-    <div class="addon-card">
-      <div class="card-top">
-        <div class="addon-type">Per Production</div>
-        <button class="info-btn" onclick="openAddonModal('addon6')" aria-label="More info">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
-        </button>
-      </div>
-      <div class="addon-name">Short-Form Video Ad Creative</div>
-      <div class="addon-price">$450+ <span style="font-size:14px;font-weight:600;">CAD</span></div>
-      <div class="addon-note">Custom short-form video creative for YouTube Ads. Professional on-camera talent and scripted production available.</div>
+      <div class="addon-note">Connect your CRM or booking system so the platform sees which ad clicks became booked patients — not just form submissions.</div>
     </div>
 
   </div>
@@ -578,59 +568,42 @@
     <div class="modal-card">
       <button class="modal-close" onclick="closeAddonModal('addon1')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
       <div class="modal-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="6" height="18" rx="1"/><rect x="9" y="8" width="6" height="13" rx="1"/><rect x="16" y="13" width="6" height="8" rx="1"/></svg></div>
-      <div class="modal-title">Additional Search Campaign</div>
+      <div class="modal-title">Additional Campaign</div>
       <div class="modal-qty">$150 CAD/month per additional campaign</div>
       <div class="modal-divider"></div>
       <div class="modal-desc">
-        <p>Your base Google Ads program includes up to 3 search campaigns. Each additional campaign allows you to promote another treatment, service line, or target a new geographic area.</p>
-        <p>Each added campaign receives full keyword research, ad copy development, extension setup, and the same ongoing optimization applied to your core campaigns. Additional campaigns share the same reporting dashboard and dedicated account manager.</p>
-        <p>This is the most efficient way to expand coverage without starting a new program from scratch.</p>
+        <p>Your base ChatGPT Ads program includes up to 3 campaigns. Each additional campaign allows you to promote another treatment, service line, or target a new geographic area.</p>
+        <p>Each added campaign receives full audience and prompt strategy, ad copy development, and the same ongoing optimization applied to your core campaigns. Additional campaigns share the same reporting dashboard and dedicated account manager.</p>
       </div>
     </div>
   </div>
 
-  <div class="modal-overlay" id="addonModal5" onclick="if(event.target===this)closeAddonModal('addon5')">
+  <div class="modal-overlay" id="addonModal2" onclick="if(event.target===this)closeAddonModal('addon2')">
     <div class="modal-card">
-      <button class="modal-close" onclick="closeAddonModal('addon5')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+      <button class="modal-close" onclick="closeAddonModal('addon2')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
       <div class="modal-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.31 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.18 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.15a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 15z"/></svg></div>
       <div class="modal-title">Phone Call &amp; Form Tracking</div>
       <div class="modal-qty">$60 USD/month (vendor pass-through) + $300 CAD one-time setup</div>
       <div class="modal-divider"></div>
       <div class="modal-desc">
-        <p>The base Google Ads program includes GA4 form tracking for contact form and booking submissions. This add-on goes further — adding dynamic phone call tracking so you can attribute every inbound call to the specific campaign, keyword, or ad that generated it.</p>
-        <p>The add-on deploys dynamic number insertion (DNI): each visitor sees a unique tracking number based on where they came from. Calls are recorded, attributed to their source, and fed back into Google Ads so bidding algorithms can optimize for phone leads, not just form fills.</p>
-        <p>The $60 USD/month fee is a direct pass-through to the call tracking platform (e.g. CallRail) and is billed in USD. Wisevu does not mark this up. The $300 CAD one-time setup covers DNI configuration, call recording setup, Google Ads integration, and GTM implementation.</p>
+        <p>The base program includes GA4 form tracking for contact form and booking submissions. This add-on goes further — adding dynamic phone call tracking so you can attribute every inbound call to the specific campaign that generated it.</p>
+        <p>The add-on deploys dynamic number insertion (DNI): each visitor sees a unique tracking number based on their source. Calls are recorded, attributed, and fed back into campaign data to improve bidding and audience targeting toward phone leads.</p>
+        <p>The $60 USD/month fee is a direct pass-through to the call tracking platform and is billed in USD. Wisevu does not mark this up. The $300 CAD one-time setup covers DNI configuration, call recording setup, and GTM implementation.</p>
       </div>
     </div>
   </div>
 
-  <div class="modal-overlay" id="addonModal6" onclick="if(event.target===this)closeAddonModal('addon6')">
+  <div class="modal-overlay" id="addonModal3" onclick="if(event.target===this)closeAddonModal('addon3')">
     <div class="modal-card">
-      <button class="modal-close" onclick="closeAddonModal('addon6')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
-      <div class="modal-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg></div>
-      <div class="modal-title">Short-Form Video Ad Creative</div>
-      <div class="modal-qty">Starting at $450 CAD per production</div>
-      <div class="modal-divider"></div>
-      <div class="modal-desc">
-        <p>Custom short-form video advertising developed for YouTube Ads — designed to capture attention in the first 5 seconds, communicate your message clearly, and drive prospective patients to take action.</p>
-        <p>Our team handles the full creative process: concept development, hooks and messaging, professional scriptwriting, branded motion design, and final production. Video is developed specifically around your campaign objective, target patient, and treatment — not adapted from generic templates.</p>
-        <p>Formats are optimized for YouTube in-stream and in-feed placements. Typical runtime is 15–30 seconds for skippable ads, and under 15 seconds for non-skippable pre-roll.</p>
-        <p><em>Professional on-camera talent, custom filming, and advanced production requirements are available and quoted separately.</em></p>
-      </div>
-    </div>
-  </div>
-
-  <div class="modal-overlay" id="addonModal7" onclick="if(event.target===this)closeAddonModal('addon7')">
-    <div class="modal-card">
-      <button class="modal-close" onclick="closeAddonModal('addon7')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+      <button class="modal-close" onclick="closeAddonModal('addon3')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
       <div class="modal-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></div>
       <div class="modal-title">CRM &amp; Offline Conversion Tracking</div>
       <div class="modal-qty">Custom setup — quoted per integration</div>
       <div class="modal-divider"></div>
       <div class="modal-desc">
-        <p>Standard Google Ads conversion tracking captures online events — form submissions, call clicks, and booking page visits. But for medical practices, the outcomes that matter most happen offline: a patient calls, qualifies, and books an appointment. Without connecting those outcomes to your ad data, Google's algorithms optimize for submissions — including spam, unqualified inquiries, and no-shows.</p>
-        <p>CRM and offline conversion tracking closes this gap. We connect your CRM or practice management system to Google Ads so that when a lead becomes a booked appointment, that outcome is fed back as a conversion. Google's bidding algorithms then optimize toward patients who book — not just patients who submit a form.</p>
-        <p>This integration typically uses Google's Offline Conversion Import (OCI) or the Conversions API (GCLID-based matching), depending on your CRM. Compatible systems include HubSpot, Salesforce, Cliniko, Jane App, and most major EHR and booking platforms.</p>
+        <p>Standard conversion tracking captures online events — form submissions and call clicks. But the outcomes that matter most happen offline: a patient calls, qualifies, and books an appointment. Without connecting those outcomes, algorithms optimize for submissions — including spam and unqualified inquiries.</p>
+        <p>CRM and offline conversion tracking closes this gap. We connect your CRM or practice management system so that when a lead becomes a booked appointment, that outcome feeds back as a conversion. The platform then optimizes toward patients who book — not just patients who submit.</p>
+        <p>Compatible systems include HubSpot, Salesforce, Cliniko, Jane App, and most major EHR and booking platforms.</p>
         <p><em>Setup complexity and cost vary by CRM and data structure. Contact us to discuss your booking workflow and we'll scope the integration.</em></p>
       </div>
     </div>
@@ -645,8 +618,8 @@
       <div class="why-card-icon">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
       </div>
-      <div class="why-card-title">Certified Google Partner Since 2009</div>
-      <div class="why-card-desc">We've been a certified Google Partner for over 15 years — meaning our team meets Google's ongoing certification requirements and manages the ad spend levels required to maintain Partner status. You work with specialists, not generalists.</div>
+      <div class="why-card-title">Google Partner Since 2009 — Now on AI Platforms</div>
+      <div class="why-card-desc">Over 15 years managing paid media for medical practices across Google, Microsoft, and YouTube. As advertising expands into AI-native environments, we bring the same rigour and outcome focus to ChatGPT Ads — grounded in what actually drives patient acquisition.</div>
     </div>
 
     <div class="why-card">
@@ -654,23 +627,7 @@
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
       </div>
       <div class="why-card-title">Medical Practice Specialists</div>
-      <div class="why-card-desc">We focus exclusively on healthcare and medical practices. We understand patient psychology, healthcare advertising policy, HIPAA considerations, and the specific compliance requirements that make medical Google Ads different from every other industry.</div>
-    </div>
-
-    <div class="why-card">
-      <div class="why-card-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z"/></svg>
-      </div>
-      <div class="why-card-title">Click Fraud Protection Built In</div>
-      <div class="why-card-desc">Click fraud wastes a significant portion of Google Ads budgets in competitive markets. We deploy active click fraud prevention from day one — identifying and blocking invalid traffic, competitor clicks, and bot traffic so your budget reaches real prospective patients.</div>
-    </div>
-
-    <div class="why-card">
-      <div class="why-card-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-      </div>
-      <div class="why-card-title">Full Transparency — You Own Everything</div>
-      <div class="why-card-desc">All campaigns are built inside your own Google Ads account. You have full admin access at all times. Your account history, conversion data, and audience lists stay with you — not with us. No lock-in, no black boxes.</div>
+      <div class="why-card-desc">We focus exclusively on healthcare and medical practices. We understand patient psychology, healthcare advertising policy, and the compliance requirements that make medical paid ads different from every other industry — on every platform we manage.</div>
     </div>
 
     <div class="why-card">
@@ -678,7 +635,23 @@
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
       </div>
       <div class="why-card-title">Conversion Tracking Tied to Patient Outcomes</div>
-      <div class="why-card-desc">We set up GTM, GA4, and Google Ads conversion tracking to capture qualified calls, form submissions, and booking completions — not just page visits. Accurate conversion data prevents Google's algorithms from optimizing toward spam and unqualified inquiries. For practices with a CRM, we can connect offline booking data so Google sees which leads actually became patients.</div>
+      <div class="why-card-desc">We set up conversion tracking to capture qualified calls, form submissions, and booking completions — not just page visits. Accurate conversion data prevents algorithms from optimizing toward spam and unqualified inquiries, and gives you real cost-per-booked-patient figures.</div>
+    </div>
+
+    <div class="why-card">
+      <div class="why-card-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+      </div>
+      <div class="why-card-title">Full Transparency — You Own Everything</div>
+      <div class="why-card-desc">All campaigns are built inside your own OpenAI Ads account. You have full admin access at all times. Your account history, conversion data, and audience data stay with you — not with us. No lock-in, no black boxes.</div>
+    </div>
+
+    <div class="why-card">
+      <div class="why-card-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+      </div>
+      <div class="why-card-title">Early Mover Strategy</div>
+      <div class="why-card-desc">ChatGPT Ads is an emerging channel with less competition and lower CPCs than mature platforms. Practices that build presence, data, and audience familiarity now will have a meaningful advantage as AI search continues to grow as a patient acquisition channel.</div>
     </div>
 
     <div class="why-card">
@@ -686,14 +659,14 @@
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
       </div>
       <div class="why-card-title">Month-to-Month — No Long-Term Contracts</div>
-      <div class="why-card-desc">We earn your business every month. Unlike agencies that lock you into 12-month contracts, our Google Ads program is month-to-month with 30 days cancellation notice. We stay because we deliver results — not because you're contractually obligated to stay.</div>
+      <div class="why-card-desc">We earn your business every month. Our ChatGPT Ads program is month-to-month with 30 days cancellation notice. We stay because we deliver results — not because you're contractually obligated to stay.</div>
     </div>
 
   </div>
 
-  <!-- Cross-sell to Meta Ads + Organic Social -->
-  <p class="section-label">Part of the Google Suite</p>
-  <h2 class="section-title">Explore Google Program Add-Ons</h2>
+  <!-- Cross-sell -->
+  <p class="section-label">Complete Your Paid Media Mix</p>
+  <h2 class="section-title">Pair with Companion Programs</h2>
   <div class="crosssell-wrap">
     <div class="crosssell-header">
       <div class="crosssell-icon">
@@ -702,17 +675,17 @@
         </svg>
       </div>
       <div>
-        <div class="crosssell-label">Exclusive Google Ads Client Pricing</div>
-        <div class="crosssell-title">Go Further with Companion Programs</div>
+        <div class="crosssell-label">Exclusive Client Pricing</div>
+        <div class="crosssell-title">Extend Your Patient Acquisition Reach</div>
       </div>
     </div>
-    <p class="crosssell-intro">Google search ads capture high-intent patients. Extend your reach with Bing Ads across Microsoft's network and video advertising on YouTube to build awareness before patients start searching.</p>
+    <p class="crosssell-intro">ChatGPT Ads reaches patients who turn to AI first. Pair it with Google search to capture high-intent patients on traditional search, and YouTube to build awareness before they start searching anywhere.</p>
     <div class="crosssell-cards">
-      <a href="bing-ads.html" class="crosssell-card">
-        <div class="crosssell-card-badge">Bing Ads Program</div>
-        <div class="crosssell-card-name">Microsoft Bing Ads</div>
-        <div class="crosssell-card-desc">Reach the 30% of searchers Google misses — on Bing, Yahoo, and DuckDuckGo. Lower CPC and less competition in most medical verticals with a higher-income, older demographic.</div>
-        <div class="crosssell-card-price">$200 <span>CAD/month</span></div>
+      <a href="google-ads.html" class="crosssell-card">
+        <div class="crosssell-card-badge">Google Ads Program</div>
+        <div class="crosssell-card-name">Google Search Ads</div>
+        <div class="crosssell-card-desc">Capture patients at the moment they search on Google — the world's largest search engine. High-intent search campaigns built and managed by a certified Google Partner since 2009.</div>
+        <div class="crosssell-card-price">$699 <span>CAD/month</span></div>
       </a>
       <a href="youtube-ads.html" class="crosssell-card">
         <div class="crosssell-card-badge">YouTube Ads Program</div>
@@ -725,12 +698,12 @@
 
   <div class="notes">
     <p class="notes-label">Program Notes</p>
-    <p><strong>Setup Fee:</strong> A one-time fee of <strong>$999 CAD</strong> covers comprehensive keyword research, campaign strategy, full campaign build, Google Tag Manager setup, GA4 integration, Google Ads conversion tracking, and click fraud protection. Advanced phone call tracking (dynamic number insertion, call recording, and attribution) is a separate paid add-on.</p>
-    <p><strong>Management Fee:</strong> The management fee is <strong>$699 CAD/month or 10% of your monthly ad spend, whichever is greater.</strong> As your spend grows, the fee scales accordingly to reflect the additional work managing a larger account requires.</p>
-    <p><strong>Ad Spend:</strong> Ad spend is separate from the management fee and is paid directly to Google by your practice. This keeps your spend fully transparent and in your control. We recommend a minimum of <strong>$600 CAD per month</strong> to generate meaningful data and results.</p>
-    <p><strong>Account Ownership:</strong> All campaigns are built inside your own Google Ads account. You retain full admin access and ownership at all times — your account history, conversion data, and Quality Scores stay with you.</p>
-    <p><strong>Commitment:</strong> Google Ads programs are <strong>month-to-month</strong>. A minimum <strong>30-day written notice</strong> is required to cancel. There are no long-term contracts.</p>
-    <p><strong>Pricing:</strong> Pricing is per practice. Multi-location practices are each treated as separate programs unless campaigns are structurally identical across locations — in which case discounts may apply.</p>
+    <p><strong>Setup Fee:</strong> A one-time fee of <strong>$1,200 CAD</strong> covers account setup or audit, campaign strategy, full campaign build, conversion tracking configuration, and audience targeting setup optimized for OpenAI's advertising platform.</p>
+    <p><strong>Management Fee:</strong> The management fee is <strong>$699 CAD/month or 10% of your monthly ad spend, whichever is greater.</strong> As your spend grows, the fee scales to reflect the additional work managing a larger account requires.</p>
+    <p><strong>Ad Spend:</strong> Ad spend is separate from the management fee and is paid directly to OpenAI by your practice. We recommend a minimum of <strong>$600 CAD per month</strong> to generate meaningful data and results.</p>
+    <p><strong>Account Ownership:</strong> All campaigns are built inside your own OpenAI Ads account. You retain full admin access and ownership at all times — your account history, conversion data, and audience data stay with you.</p>
+    <p><strong>Commitment:</strong> ChatGPT Ads programs are <strong>month-to-month</strong>. A minimum <strong>30-day written notice</strong> is required to cancel. There are no long-term contracts.</p>
+    <p><strong>Emerging Platform:</strong> ChatGPT Ads is a relatively new advertising platform. Features, targeting capabilities, and pricing are subject to change by OpenAI. Wisevu monitors platform developments closely and adapts strategy as the platform evolves. We will communicate any material changes to your program promptly.</p>
     <p><strong>Landing Pages &amp; CRO:</strong> Landing-page creation and conversion-rate optimization are <strong>not included</strong> in this program. We review your existing landing pages and may offer advisory recommendations for alignment with campaign intent, but dedicated landing-page design, development, or A/B testing are separate services.</p>
   </div>
 </main>
@@ -755,39 +728,39 @@
 <script>
 var popupData = {
   card1: {
-    title: "Google Ads Campaign Management",
+    title: "ChatGPT Ads Campaign Management",
     qty: "Up to 3 campaigns",
-    desc: "<p>Your program includes full management of up to 3 Google Ads search campaigns. Each campaign is structured around a specific treatment, service line, or patient acquisition objective — giving Google's algorithm clean, focused data to optimize against.</p><p>We handle the complete campaign build: account structure, match type strategy, ad group organization, negative keyword lists, geo-targeting, bid strategy selection, ad scheduling, and device adjustments. Every campaign is set up to collect real conversion data from day one so optimization is grounded in what's actually generating patient leads — not just clicks.</p><p>Ongoing management includes regular bid adjustments, search term analysis, keyword expansion and pruning, Quality Score improvement, and structured A/B testing of ad copy. As a certified Google Partner, we have access to Google's latest beta features and direct support channels when issues arise.</p><p>All campaigns are managed directly within your own Google Ads account. You have full visibility into spend, performance, and what is running at any time.</p>"
+    desc: "<p>Your program includes full management of up to 3 ChatGPT Ads campaigns. Each campaign is structured around a specific treatment, service line, or patient acquisition objective — giving the platform's algorithm focused data to optimize against.</p><p>We handle the complete campaign build: account structure, audience targeting, ad group organization, geographic parameters, bid strategy, and conversion tracking. Every campaign is set up to collect real conversion data from day one so optimization is grounded in qualified calls and booked appointments — not just clicks.</p><p>Ongoing management includes regular bid adjustments, audience refinements, creative rotation testing, and performance analysis. All campaigns are managed directly within your own OpenAI Ads account. You have full visibility into spend, performance, and what is running at any time.</p>"
   },
   card2: {
-    title: "Keyword Research & Strategy",
+    title: "Audience & Prompt Strategy",
     qty: "Every campaign",
-    desc: "<p>Every campaign begins with a search-opportunity analysis — not a generic export from Google Keyword Planner. We examine which terms competitors are overspending on, then uncover overlooked, bottom-of-funnel searches that signal a patient is actively choosing a provider or preparing to book.</p><p>Because we specialize in medical marketing, we understand how patients describe treatments, symptoms, providers, and locations at different stages of their decision. We combine that experience with advanced research tools and specialized datasets to uncover search-volume and intent signals that traditional keyword platforms often miss.</p><p>Our paid media specialists also scrutinize Google's automated recommendations, which can favour broader reach over efficient patient acquisition. We protect your budget with disciplined match types, extensive negative-keyword controls, and continuous search-term analysis — expanding only when the data shows relevance and conversion potential.</p><p>The result is a focused strategy built to capture qualified demand, not simply generate more clicks.</p>"
+    desc: "<p>ChatGPT Ads reaches patients through a fundamentally different intent signal than traditional search: instead of keywords, patients express their needs through natural-language questions and conversational prompts. Our audience and prompt strategy is built around understanding how patients ask AI for healthcare guidance — and positioning your practice as the most relevant answer.</p><p>We analyze the AI-search behaviours most common to your specialty and target market: the questions patients ask when they're evaluating providers, comparing treatments, or looking for a clinic near them. We then build targeting parameters and ad creative around those specific intent patterns.</p><p>We also monitor how OpenAI's platform updates affect targeting capabilities and adjust strategy as the platform evolves. Audience strategy is not a one-time setup — it's an ongoing discipline that keeps your campaigns aligned with how patients are actually using AI to find care.</p>"
   },
   card3: {
-    title: "Ad Copy & Extension Development",
+    title: "Ad Copy & Creative Development",
     qty: "Every campaign",
-    desc: "<p>Every campaign includes professionally written responsive search ads (RSAs) with multiple headline and description variations. Google uses these variations to find the best-performing combinations for each search query, user, and device — maximizing your click-through rate over time.</p><p>Beyond the core ad copy, we develop and manage all available ad extensions: sitelinks to key service and contact pages, callout extensions that highlight differentiators, structured snippets for treatment types, call extensions for direct phone contact, and location extensions when applicable.</p><p>Ad copy for medical practices must be carefully crafted to drive clicks while remaining accurate, compliant with Google's healthcare advertising policies, and aligned with how your target patients think about their healthcare decisions. We write copy that communicates credibility and expertise — not just price and proximity.</p><p>All ad copy is tested continuously. We monitor headline and description performance, replace low-performing assets, and test new angles and messaging as campaigns mature.</p>"
+    desc: "<p>Ad copy for AI-native platforms must be written differently than traditional search ads. Patients interacting with ChatGPT are in a conversational mindset — they expect responses that feel helpful, credible, and directly relevant to the question they asked. Generic ad copy that would work on Google often falls flat in this context.</p><p>We develop ad copy and creative assets that are calibrated for conversational AI exposure: clear value communication, clinical credibility, and a compelling call to action — all without violating OpenAI's healthcare advertising guidelines.</p><p>All ad copy is tested and refined continuously. We monitor asset performance, replace underperforming creative, and test new messaging as campaigns mature and platform capabilities evolve.</p>"
   },
   card4: {
     title: "Campaign Optimization",
     qty: "Ongoing",
-    desc: "<p>Active, ongoing campaign optimization is where the real results come from. We continuously analyze performance data and make adjustments across every lever available — bids, keywords, match types, audiences, ad assets, landing page alignment, and campaign settings.</p><p>Key optimization activities include: bid adjustments by device, location, time of day, and audience segment; search term report analysis and negative keyword additions; keyword expansion based on search trends; Quality Score improvement through ad relevance and landing page alignment; ad rotation management and underperforming asset removal; and budget reallocation to highest-performing campaigns and ad groups.</p><p>We also monitor for anomalies — sudden drops in impression share, unexpected cost increases, or conversion rate changes — and investigate root causes quickly rather than waiting for a monthly report to surface them.</p><p>Our optimization goal is to continuously lower your cost per patient lead while improving the quality and intent of patients your ads are attracting.</p>"
+    desc: "<p>Active, ongoing optimization is where real results come from. We continuously analyze performance data and make adjustments across every lever available: bids, audience segments, ad creative, geographic targeting, and campaign settings.</p><p>Key optimization activities include: bid adjustments by audience, location, and time; audience refinement based on conversion data; creative rotation and underperforming asset replacement; budget reallocation to highest-performing campaigns; and anomaly monitoring — catching unexpected drops or cost increases quickly rather than waiting for a monthly report.</p><p>Our optimization goal is to continuously lower your cost per booked patient while improving the quality and intent of the patients your ads reach.</p>"
   },
   card5: {
-    title: "Click Fraud Prevention",
+    title: "Conversion Tracking & Outcome Measurement",
     qty: "Ongoing",
-    desc: "<p>Click fraud is a real and significant problem in Google Ads — especially in competitive medical verticals. Invalid clicks from competitors, bots, click farms, and irrelevant traffic drain ad budgets without generating a single patient lead.</p><p>Google's own built-in invalid click detection catches some fraudulent activity, but research consistently shows it misses a meaningful portion — particularly more sophisticated click patterns. We deploy active click fraud prevention tools that go beyond Google's default filtering.</p><p>Our click fraud protection monitors your traffic in real time, identifies suspicious click patterns, and automatically adds offending IP addresses and networks to your exclusion lists. Over time, this progressively cleans up your traffic quality and reduces wasted spend.</p><p>Click fraud prevention is not a set-and-forget feature. We monitor exclusion lists, review flagged activity, and maintain protection as traffic patterns evolve.</p><p><strong>Click fraud prevention is included in every Google Ads program at no additional cost.</strong></p>"
+    desc: "<p>Clicks and impressions are not patient outcomes. We configure conversion tracking from day one to capture the actions that actually matter: qualified phone calls, form submissions, and booking completions.</p><p>Accurate conversion data does two things: it gives you real cost-per-lead and cost-per-booked-patient figures, and it gives the platform's algorithms the signal they need to optimize toward actual patients — not just people who clicked through and left.</p><p>Without proper conversion tracking, AI ad platforms optimize toward whatever they can measure — often low-quality traffic. With it, every optimization cycle becomes more focused on the patients most likely to book and show up.</p>"
   },
   card6: {
-    title: "Advanced Reporting & Conversion Tracking",
+    title: "Advanced Reporting",
     qty: "Monthly",
-    desc: "<p>Every month you receive a clear performance report covering impressions, clicks, click-through rate, average cost-per-click, cost per conversion, total conversions, and conversion rate by campaign and ad group. We set up a live reporting dashboard connected directly to your Google Ads and GA4 accounts so you can check performance at any time between reports.</p><p>Conversion tracking is configured from day one — capturing phone calls, form submissions, booking completions, and any other meaningful patient action. This gives you accurate cost-per-lead data for every campaign, and gives Google's Smart Bidding algorithms the signal they need to optimize toward real patient leads rather than just website visits.</p><p>Our reporting doesn't bury you in raw numbers or agency jargon. We highlight what drove results, what we're testing, where we're seeing inefficiency, and what the plan is for next month. Your monthly call is where we walk through results together and align on direction.</p>"
+    desc: "<p>Every month you receive a clear performance report covering impressions, clicks, click-through rate, cost per conversion, total conversions, and conversion rate by campaign. We set up a live reporting dashboard connected directly to your campaign and GA4 accounts so you can check performance at any time between reports.</p><p>Our reporting doesn't bury you in raw numbers or agency jargon. We highlight what drove results, what we're testing, where we're seeing inefficiency, and what the plan is for next month. Your monthly call is where we walk through results together and align on direction.</p><p>As ChatGPT Ads is an emerging platform, we also flag platform-level changes — new features, policy updates, targeting changes — that could affect your campaigns, and explain what we're doing about them.</p>"
   },
   card7: {
     title: "Dedicated Account Manager",
     qty: "Ongoing",
-    desc: "<p>You have a single, dedicated account manager who knows your practice, your specialty, your patient market, and your campaigns. Someone you can reach directly — not a support queue, not a different account rep every quarter.</p><p>Your account manager oversees your campaigns, coordinates strategy and optimization, manages your monthly reporting and call, and is your point of contact for questions, requests, and new initiatives. They build deep familiarity with your practice over time — your highest-value services, local competitive landscape, seasonal patterns, and patient acquisition goals — and that context improves every campaign decision.</p><p>For medical practices specifically, continuity matters: compliance knowledge, specialty understanding, and the nuances of your market all take time to develop. A dedicated manager means that knowledge accumulates rather than restarting every time something changes.</p>"
+    desc: "<p>You have a single, dedicated account manager who knows your practice, your specialty, your patient market, and your campaigns. Someone you can reach directly — not a support queue, not a different account rep every quarter.</p><p>Your account manager oversees your campaigns, coordinates strategy and optimization, manages your monthly reporting and call, and is your point of contact for questions, requests, and new initiatives. For an emerging platform like ChatGPT Ads, having a dedicated manager who is actively tracking platform changes — and translating them into clear implications for your program — is especially valuable.</p>"
   }
 };
 
@@ -810,7 +783,7 @@ function handleOverlayClick(e) {
   if (e.target === document.getElementById('modal-overlay')) closeModal();
 }
 
-var addonModalIds = ['addon1','addon5','addon6','addon7'];
+var addonModalIds = ['addon1','addon2','addon3'];
 document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') {
     closeModal();
@@ -927,7 +900,10 @@ function closeAddonModal(id) {
     drawConstellation();
     requestAnimationFrame(animate);
   }
-  resize(); init(); animate();
+
+  resize();
+  init();
+  animate();
   window.addEventListener('resize', function() { resize(); init(); });
 })();
 </script>
