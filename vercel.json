@@ -1,4 +1,13 @@
 {
+  "redirects": [
+    {
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "medical-google-ads-program.vercel.app" }],
+      "missing": [{ "type": "header", "key": "x-forwarded-host", "value": "programs.wisevu.com" }],
+      "destination": "https://programs.wisevu.com/medical-google-ads/:path*",
+      "permanent": false
+    }
+  ],
   "headers": [
     {
       "source": "/(.*)",
